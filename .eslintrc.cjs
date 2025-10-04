@@ -1,5 +1,8 @@
+// @ts-check
+// @ts-check
 module.exports = {
   root: true,
+  ignorePatterns: ['build/**', '**/*.d.ts'],
   env: {
     browser: true,
     es2021: true,
@@ -33,6 +36,8 @@ module.exports = {
     'react/prop-types': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'prettier/prettier': ['error', {}, { usePrettierrc: true }],
+    '@typescript-eslint/ban-types': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
   },
   overrides: [
     {

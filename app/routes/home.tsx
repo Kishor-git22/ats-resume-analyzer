@@ -21,15 +21,9 @@ export default function Home() {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [isPaused, setIsPaused] = useState(false);
 
-  // Auth check and auto-login
+  // Auth check
   useEffect(() => {
-    if (!auth.isAuthenticated) {
-      // Try to sign in automatically
-      auth.signIn().catch(() => {
-        // If auto-login fails, redirect to auth
-        navigate("/auth?next=/");
-      });
-    }
+    if (!auth.isAuthenticated) navigate("/auth?next=/");
   }, [auth.isAuthenticated]);
 
   // Load resumes

@@ -3,6 +3,7 @@
 A modern web application that helps job seekers optimize their resumes using AI-powered analysis. Get instant feedback on your resume's ATS (Applicant Tracking System) compatibility and improve your chances of landing interviews.
 
 ## Table of Contents
+
 - [Introduction](#introduction)
 - [Tech Stack](#tech-stack)
 - [Features](#features)
@@ -18,6 +19,7 @@ ATS Resume Analyzer is designed to help job seekers understand how their resumes
 ## Tech Stack
 
 ### Frontend
+
 - **React 19** - A JavaScript library for building user interfaces
 - **TypeScript** - For type-safe JavaScript development
 - **React Router** - For client-side routing
@@ -28,6 +30,7 @@ ATS Resume Analyzer is designed to help job seekers understand how their resumes
 - **PDF.js** - For PDF processing in the browser
 
 ### Backend
+
 - **Node.js** - JavaScript runtime environment
 - **Express.js** - Web application framework for building RESTful APIs
 - **MongoDB** - NoSQL database for storing user data and resume information
@@ -35,6 +38,7 @@ ATS Resume Analyzer is designed to help job seekers understand how their resumes
 - **JWT** - For secure authentication and authorization
 
 ### Development Tools
+
 - **Vite** - Next Generation Frontend Tooling
 - **TypeScript** - Type checking and better developer experience
 - **ESLint** - For code linting
@@ -56,12 +60,14 @@ ATS Resume Analyzer is designed to help job seekers understand how their resumes
    - npm or yarn
 
 2. **Clone the repository**
+
    ```bash
    git clone https://github.com/your-username/ats-resume-analyzer.git
    cd ats-resume-analyzer
    ```
 
 3. **Install dependencies**
+
    ```bash
    npm install
    # or
@@ -69,6 +75,7 @@ ATS Resume Analyzer is designed to help job seekers understand how their resumes
    ```
 
 4. **Start the development server**
+
    ```bash
    npm run dev
    # or
@@ -96,11 +103,13 @@ ATS Resume Analyzer is designed to help job seekers understand how their resumes
 ## Development
 
 - **Type Checking**:
+
   ```bash
   npm run typecheck
   ```
 
 - **Building for Production**:
+
   ```bash
   npm run build
   ```

@@ -20,8 +20,8 @@ const ScoreBadge = ({ score }: { score: number }) => {
           score > 69
             ? 'text-badge-green-text'
             : score > 39
-              ? 'text-badge-yellow-text'
-              : 'text-badge-red-text'
+            ? 'text-badge-yellow-text'
+            : 'text-badge-red-text'
         )}
       >
         {score}/100

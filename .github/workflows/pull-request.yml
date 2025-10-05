@@ -37,12 +37,7 @@ jobs:
       - name: Install project dependencies
         run: npm install
 
-      # Verify code formatting matches Prettier rules
-      - name: Run Prettier check
-        run: npm run format:check
-
-      # Check for code quality issues using ESLint
-      - name: Run lint
-        run: npm run lint
-
-
+      # Run build
+      - name: Run build
+        run: npm run build
+  

@@ -20,8 +20,8 @@ const ATS: React.FC<ATSProps> = ({ score, suggestions }) => {
     score > 69
       ? '/icons/ats-good.svg'
       : score > 49
-        ? '/icons/ats-warning.svg'
-        : '/icons/ats-bad.svg';
+      ? '/icons/ats-warning.svg'
+      : '/icons/ats-bad.svg';
 
   // Determine subtitle based on score
   const subtitle = score > 69 ? 'Great Job!' : score > 49 ? 'Good Start' : 'Needs Improvement';

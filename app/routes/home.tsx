@@ -1,14 +1,14 @@
-import type { Route } from './+types/home';
-import Navbar from '~/components/Navbar';
-import ResumeCard from '~/components/ResumeCard';
-import { usePuterStore } from '~/lib/puter';
-import { Link, useNavigate } from 'react-router';
-import { useEffect, useState, useRef } from 'react';
+import type { Route } from "./+types/home";
+import Navbar from "~/components/Navbar";
+import ResumeCard from "~/components/ResumeCard";
+import { usePuterStore } from "~/lib/puter";
+import { Link, useNavigate } from "react-router";
+import { useEffect, useState, useRef } from "react";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: 'ATS RESUME ANALYZER' },
-    { name: 'description', content: 'Smart feedback for your dream job!' },
+    { title: "ATS RESUME ANALYZER" },
+    { name: "description", content: "Smart feedback for your dream job!" },
   ];
 }
 
@@ -23,15 +23,17 @@ export default function Home() {
 
   // Auth check
   useEffect(() => {
-    if (!auth.isAuthenticated) navigate('/auth?next=/');
+    if (!auth.isAuthenticated) navigate("/auth?next=/");
   }, [auth.isAuthenticated]);
 
   // Load resumes
   useEffect(() => {
     const loadResumes = async () => {
       setLoadingResumes(true);
-      const resumes = (await kv.list('resume:*', true)) as KVItem[];
-      const parsedResumes = resumes?.map((resume) => JSON.parse(resume.value) as Resume);
+      const resumes = (await kv.list("resume:*", true)) as KVItem[];
+      const parsedResumes = resumes?.map(
+        (resume) => JSON.parse(resume.value) as Resume
+      );
       setResumes(parsedResumes || []);
       setLoadingResumes(false);
     };
@@ -70,19 +72,19 @@ export default function Home() {
 
     const onMouseDown = (e: MouseEvent) => {
       isDown = true;
-      slider.classList.add('cursor-grabbing');
+      slider.classList.add("cursor-grabbing");
       startX = e.pageX - slider.offsetLeft;
       scrollLeft = slider.scrollLeft;
     };
 
     const onMouseLeave = () => {
       isDown = false;
-      slider.classList.remove('cursor-grabbing');
+      slider.classList.remove("cursor-grabbing");
     };
 
     const onMouseUp = () => {
       isDown = false;
-      slider.classList.remove('cursor-grabbing');
+      slider.classList.remove("cursor-grabbing");
     };
 
     const onMouseMove = (e: MouseEvent) => {
@@ -93,16 +95,16 @@ export default function Home() {
       slider.scrollLeft = scrollLeft - walk;
     };
 
-    slider.addEventListener('mousedown', onMouseDown);
-    slider.addEventListener('mouseleave', onMouseLeave);
-    slider.addEventListener('mouseup', onMouseUp);
-    slider.addEventListener('mousemove', onMouseMove);
+    slider.addEventListener("mousedown", onMouseDown);
+    slider.addEventListener("mouseleave", onMouseLeave);
+    slider.addEventListener("mouseup", onMouseUp);
+    slider.addEventListener("mousemove", onMouseMove);
 
     return () => {
-      slider.removeEventListener('mousedown', onMouseDown);
-      slider.removeEventListener('mouseleave', onMouseLeave);
-      slider.removeEventListener('mouseup', onMouseUp);
-      slider.removeEventListener('mousemove', onMouseMove);
+      slider.removeEventListener("mousedown", onMouseDown);
+      slider.removeEventListener("mouseleave", onMouseLeave);
+      slider.removeEventListener("mouseup", onMouseUp);
+      slider.removeEventListener("mousemove", onMouseMove);
     };
   }, []);
 
@@ -110,82 +112,78 @@ export default function Home() {
     <main className="bg-[url('/images/bg-main.svg')] bg-cover max-md:px-5">
       <Navbar />
 
-      <section className="main-section grid grid-cols-1 md:grid-cols-2 max-md:pt-5 gap-8 items-start md:items-center">
-        {/* Left Side - Text Content (shows first on mobile) */}
-        <div className="page-heading md:sticky md:top-5 order-1 md:order-2">
-          <h1 className="text-2xl md:text-lg max-md:text-xl font-bold text-gradient">
-            Track Your Applications & Resume Ratings
-          </h1>
-          {!loadingResumes && resumes?.length === 0 ? (
-            <h2>No resumes found. Upload your first resume to get feedback.</h2>
-          ) : (
-            <h2>Review your submissions and check AI-powered feedback.</h2>
-          )}
-        </div>
+     <section className="main-section grid grid-cols-1 md:grid-cols-2 max-md:pt-5 gap-8 items-start md:items-center">
+  {/* Left Side - Text Content (shows first on mobile) */}
+  <div className="page-heading md:sticky md:top-5 order-1 md:order-2">
+    <h1 className="text-2xl md:text-lg max-md:text-xl font-bold text-gradient">
+      Track Your Applications & Resume Ratings
+    </h1>
+    {!loadingResumes && resumes?.length === 0 ? (
+      <h2>No resumes found. Upload your first resume to get feedback.</h2>
+    ) : (
+      <h2>Review your submissions and check AI-powered feedback.</h2>
+    )}
+  </div>
 
-        {/* Right Side - Infinite Slider (shows second on mobile) */}
-        <div className="order-2 md:order-2 max-md:mx-2">
-          <div className="bg-gradient-to-r  from-purple-500/20 via-pink-500/10 to-blue-500/20 p-6 max-md:p-4 rounded-3xl">
-            {/* Inner scrollable container */}
-            <div
-              ref={sliderRef}
-              className="
+  {/* Right Side - Infinite Slider (shows second on mobile) */}
+  <div className="order-2 md:order-2 max-md:mx-2">
+    <div className="bg-gradient-to-r  from-purple-500/20 via-pink-500/10 to-blue-500/20 p-6 max-md:p-4 rounded-3xl">
+      {/* Inner scrollable container */}
+      <div
+        ref={sliderRef}
+        className="
           overflow-x-scroll cursor-grab relative scrollbar-hidden
           rounded-2xl
           scroll-px-6
         "
-              onMouseEnter={() => setIsPaused(true)}
-              onMouseLeave={() => setIsPaused(false)}
-            >
-              <div className="flex items-stretch gap-6 py-6 px-6 max-md:gap-4 max-md:py-4 max-md:px-4">
-                {!loadingResumes && resumes?.length > 0 ? (
-                  <>
-                    {resumes.map((resume) => (
-                      <div
-                        key={`a-${resume.id}`}
-                        className="
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        <div className="flex items-stretch gap-6 py-6 px-6 max-md:gap-4 max-md:py-4 max-md:px-4">
+          {!loadingResumes && resumes?.length > 0 ? (
+            <>
+              {resumes.map((resume) => (
+                <div
+                  key={`a-${resume.id}`}
+                  className="
                     min-w-[280px] max-md:min-w-[240px] flex-shrink-0 rounded-xl bg-white shadow-md p-4
                     transition-transform duration-500 hover:-translate-y-2 hover:scale-[1.05]
                   "
-                      >
-                        <ResumeCard resume={resume} />
-                      </div>
-                    ))}
+                >
+                  <ResumeCard resume={resume} />
+                </div>
+              ))}
 
-                    {resumes.map((resume) => (
-                      <div
-                        key={`b-${resume.id}`}
-                        className="
+              {resumes.map((resume) => (
+                <div
+                  key={`b-${resume.id}`}
+                  className="
                     min-w-[280px] max-md:min-w-[240px] flex-shrink-0 rounded-xl bg-white shadow-md p-4
                     transition-transform duration-500 hover:-translate-y-2 hover:scale-[1.05]
                   "
-                      >
-                        <ResumeCard resume={resume} />
-                      </div>
-                    ))}
-                  </>
-                ) : loadingResumes ? (
-                  <div className="flex flex-col items-center justify-center w-full">
-                    <img src="/images/resume-scan-2.gif" className="w-[200px] max-md:w-[150px]" />
-                  </div>
-                ) : (
-                  <div className="flex flex-col items-center justify-center mt-10 gap-4 w-full max-md:mt-6">
-                    <h2 className="text-center max-md:text-sm">
-                      No resumes found. Upload your first resume to get feedback.
-                    </h2>
-                    <Link
-                      to="/upload"
-                      className="primary-button w-fit text-xl max-md:text-lg font-semibold"
-                    >
-                      Upload Resume
-                    </Link>
-                  </div>
-                )}
-              </div>
+                >
+                  <ResumeCard resume={resume} />
+                </div>
+              ))}
+            </>
+          ) : loadingResumes ? (
+            <div className="flex flex-col items-center justify-center w-full">
+              <img src="/images/resume-scan-2.gif" className="w-[200px] max-md:w-[150px]" />
             </div>
-          </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center mt-10 gap-4 w-full max-md:mt-6">
+              <h2 className="text-center max-md:text-sm">No resumes found. Upload your first resume to get feedback.</h2>
+              <Link to="/upload" className="primary-button w-fit text-xl max-md:text-lg font-semibold">
+                Upload Resume
+              </Link>
+            </div>
+          )}
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
+
     </main>
   );
 }

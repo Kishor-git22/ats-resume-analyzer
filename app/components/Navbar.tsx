@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from "react-router";
 
 const Navbar = () => {
   const location = useLocation();
@@ -11,8 +11,11 @@ const Navbar = () => {
       </Link>
 
       <div className="flex items-center gap-4">
-        {location.pathname === '/upload' ? (
-          <button onClick={() => navigate(-1)} className="primary-button w-fit">
+        {location.pathname === "/upload" ? (
+          <button
+            onClick={() => navigate(-1)}
+             className="primary-button w-fit"
+          >
             ← Back
           </button>
         ) : (

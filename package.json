@@ -4,16 +4,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --config .eslintrc.cjs",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix --config .eslintrc.cjs",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
-    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
-    "lint:gherkin": "gherkin-lint"
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\""
+
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",
@@ -56,9 +51,11 @@
     "zustand": "^5.0.8"
   },
   "dependencies": {
+    "@react-router/node": "^7.9.3",
     "@remix-run/router": "^1.15.3",
     "@types/react-dropzone": "^4.2.2",
     "isbot": "^5",
+    "pdfjs-dist": "^5.4.149",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.3.8",

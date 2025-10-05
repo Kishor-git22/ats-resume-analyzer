@@ -430,14 +430,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   return /* @__PURE__ */ jsxs("nav", { className: "navbar flex items-center justify-between max-md:flex-col text-center gap-4 ", children: [
     /* @__PURE__ */ jsx(Link, { to: "/", children: /* @__PURE__ */ jsx("p", { className: "text-2xl max-md:text-xl font-bold text-gradient", children: "ATS RESUME ANALYZER" }) }),
-    /* @__PURE__ */ jsx("div", { className: "flex items-center gap-4", children: location.pathname === "/upload" ? /* @__PURE__ */ jsx(
-      "button",
-      {
-        onClick: () => navigate(-1),
-        className: "primary-button w-fit",
-        children: "← Back"
-      }
-    ) : /* @__PURE__ */ jsx(Link, { to: "/upload", className: "primary-button w-fit", children: "Upload Your Resume" }) })
+    /* @__PURE__ */ jsx("div", { className: "flex items-center gap-4", children: location.pathname === "/upload" ? /* @__PURE__ */ jsx("button", { onClick: () => navigate(-1), className: "primary-button w-fit", children: "← Back" }) : /* @__PURE__ */ jsx(Link, { to: "/upload", className: "primary-button w-fit", children: "Upload Your Resume" }) })
   ] });
 };
 const ScoreCircle = ({ score = 75 }) => {
@@ -448,50 +441,43 @@ const ScoreCircle = ({ score = 75 }) => {
   const progress = score / 100;
   const strokeDashoffset = circumference * (1 - progress);
   return /* @__PURE__ */ jsxs("div", { className: "relative w-[60px] h-[60px]", children: [
-    /* @__PURE__ */ jsxs(
-      "svg",
-      {
-        height: "100%",
-        width: "100%",
-        viewBox: "0 0 100 100",
-        className: "transform -rotate-90",
-        children: [
-          /* @__PURE__ */ jsx(
-            "circle",
-            {
-              cx: "50",
-              cy: "50",
-              r: normalizedRadius,
-              stroke: "#e5e7eb",
-              strokeWidth: stroke,
-              fill: "transparent"
-            }
-          ),
-          /* @__PURE__ */ jsx("defs", { children: /* @__PURE__ */ jsxs("linearGradient", { id: "grad", x1: "1", y1: "0", x2: "0", y2: "1", children: [
-            /* @__PURE__ */ jsx("stop", { offset: "0%", stopColor: "#FF97AD" }),
-            /* @__PURE__ */ jsx("stop", { offset: "100%", stopColor: "#5171FF" })
-          ] }) }),
-          /* @__PURE__ */ jsx(
-            "circle",
-            {
-              cx: "50",
-              cy: "50",
-              r: normalizedRadius,
-              stroke: "url(#grad)",
-              strokeWidth: stroke,
-              fill: "transparent",
-              strokeDasharray: circumference,
-              strokeDashoffset,
-              strokeLinecap: "round"
-            }
-          )
-        ]
-      }
-    ),
+    /* @__PURE__ */ jsxs("svg", { height: "100%", width: "100%", viewBox: "0 0 100 100", className: "transform -rotate-90", children: [
+      /* @__PURE__ */ jsx(
+        "circle",
+        {
+          cx: "50",
+          cy: "50",
+          r: normalizedRadius,
+          stroke: "#e5e7eb",
+          strokeWidth: stroke,
+          fill: "transparent"
+        }
+      ),
+      /* @__PURE__ */ jsx("defs", { children: /* @__PURE__ */ jsxs("linearGradient", { id: "grad", x1: "1", y1: "0", x2: "0", y2: "1", children: [
+        /* @__PURE__ */ jsx("stop", { offset: "0%", stopColor: "#FF97AD" }),
+        /* @__PURE__ */ jsx("stop", { offset: "100%", stopColor: "#5171FF" })
+      ] }) }),
+      /* @__PURE__ */ jsx(
+        "circle",
+        {
+          cx: "50",
+          cy: "50",
+          r: normalizedRadius,
+          stroke: "url(#grad)",
+          strokeWidth: stroke,
+          fill: "transparent",
+          strokeDasharray: circumference,
+          strokeDashoffset,
+          strokeLinecap: "round"
+        }
+      )
+    ] }),
     /* @__PURE__ */ jsx("div", { className: "absolute inset-0 flex flex-col items-center justify-center", children: /* @__PURE__ */ jsx("span", { className: "font-semibold text-[10px]", children: `${score}/100` }) })
   ] });
 };
-const ResumeCard = ({ resume: { id, companyName, jobTitle, feedback, imagePath } }) => {
+const ResumeCard = ({
+  resume: { id, companyName, jobTitle, feedback, imagePath }
+}) => {
   const { fs } = usePuterStore();
   const [resumeUrl, setResumeUrl] = useState("");
   useEffect(() => {
@@ -744,10 +730,13 @@ function formatSize(bytes) {
 }
 const generateUUID = () => crypto.randomUUID();
 const FileUploader = ({ onFileSelect }) => {
-  const onDrop = useCallback((acceptedFiles2) => {
-    const file2 = acceptedFiles2[0] || null;
-    onFileSelect == null ? void 0 : onFileSelect(file2);
-  }, [onFileSelect]);
+  const onDrop = useCallback(
+    (acceptedFiles2) => {
+      const file2 = acceptedFiles2[0] || null;
+      onFileSelect == null ? void 0 : onFileSelect(file2);
+    },
+    [onFileSelect]
+  );
   const maxFileSize = 20 * 1024 * 1024;
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({
     onDrop,
@@ -764,9 +753,16 @@ const FileUploader = ({ onFileSelect }) => {
         /* @__PURE__ */ jsx("p", { className: "text-sm font-medium text-gray-700 truncate max-w-xs", children: file.name }),
         /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-500", children: formatSize(file.size) })
       ] }) }),
-      /* @__PURE__ */ jsx("button", { className: "p-2 cursor-pointer", onClick: (e) => {
-        onFileSelect == null ? void 0 : onFileSelect(null);
-      }, children: /* @__PURE__ */ jsx("img", { src: "/icons/cross.svg", alt: "remove", className: "w-4 h-4" }) })
+      /* @__PURE__ */ jsx(
+        "button",
+        {
+          className: "p-2 cursor-pointer",
+          onClick: (e) => {
+            onFileSelect == null ? void 0 : onFileSelect(null);
+          },
+          children: /* @__PURE__ */ jsx("img", { src: "/icons/cross.svg", alt: "remove", className: "w-4 h-4" })
+        }
+      )
     ] }) : /* @__PURE__ */ jsxs("div", { children: [
       /* @__PURE__ */ jsx("div", { className: "mx-auto w-16 h-16 flex items-center justify-center mb-0", children: /* @__PURE__ */ jsx("img", { src: "/icons/info.svg", alt: "upload", className: "size-10" }) }),
       /* @__PURE__ */ jsxs("p", { className: "text-base text-gray-500", children: [
@@ -884,7 +880,10 @@ const AIResponseFormat = `
         }[]; //give 3-4 tips
       };
     }`;
-const prepareInstructions = ({ jobTitle, jobDescription }) => `You are an expert in ATS (Applicant Tracking System) and resume analysis.
+const prepareInstructions = ({
+  jobTitle,
+  jobDescription
+}) => `You are an expert in ATS (Applicant Tracking System) and resume analysis.
       Please analyze and rate this resume and suggest how to improve it.
       The rating can be low if the resume is bad.
       Be thorough and detailed. Don't be afraid to point out any mistakes or areas for improvement.
@@ -1058,20 +1057,10 @@ const ScoreGauge = ({ score = 75 }) => {
   }, []);
   return /* @__PURE__ */ jsx("div", { className: "flex flex-col items-center", children: /* @__PURE__ */ jsxs("div", { className: "relative w-40 h-20", children: [
     /* @__PURE__ */ jsxs("svg", { viewBox: "0 0 100 50", className: "w-full h-full", children: [
-      /* @__PURE__ */ jsx("defs", { children: /* @__PURE__ */ jsxs(
-        "linearGradient",
-        {
-          id: "gaugeGradient",
-          x1: "0%",
-          y1: "0%",
-          x2: "100%",
-          y2: "0%",
-          children: [
-            /* @__PURE__ */ jsx("stop", { offset: "0%", stopColor: "#a78bfa" }),
-            /* @__PURE__ */ jsx("stop", { offset: "100%", stopColor: "#fca5a5" })
-          ]
-        }
-      ) }),
+      /* @__PURE__ */ jsx("defs", { children: /* @__PURE__ */ jsxs("linearGradient", { id: "gaugeGradient", x1: "0%", y1: "0%", x2: "100%", y2: "0%", children: [
+        /* @__PURE__ */ jsx("stop", { offset: "0%", stopColor: "#a78bfa" }),
+        /* @__PURE__ */ jsx("stop", { offset: "100%", stopColor: "#fca5a5" })
+      ] }) }),
       /* @__PURE__ */ jsx(
         "path",
         {
@@ -1176,9 +1165,7 @@ const ATS = ({ score, suggestions }) => {
     /* @__PURE__ */ jsx("p", { className: "text-gray-700 italic", children: "Keep refining your resume to improve your chances of getting past ATS filters and into the hands of recruiters." })
   ] });
 };
-const AccordionContext = createContext(
-  void 0
-);
+const AccordionContext = createContext(void 0);
 const useAccordion = () => {
   const context = useContext(AccordionContext);
   if (!context) {
@@ -1192,9 +1179,7 @@ const Accordion = ({
   allowMultiple = false,
   className = ""
 }) => {
-  const [activeItems, setActiveItems] = useState(
-    defaultOpen ? [defaultOpen] : []
-  );
+  const [activeItems, setActiveItems] = useState(defaultOpen ? [defaultOpen] : []);
   const toggleItem = (id) => {
     setActiveItems((prev) => {
       if (allowMultiple) {
@@ -1205,19 +1190,9 @@ const Accordion = ({
     });
   };
   const isItemActive = (id) => activeItems.includes(id);
-  return /* @__PURE__ */ jsx(
-    AccordionContext.Provider,
-    {
-      value: { activeItems, toggleItem, isItemActive },
-      children: /* @__PURE__ */ jsx("div", { className: `space-y-2 ${className}`, children })
-    }
-  );
+  return /* @__PURE__ */ jsx(AccordionContext.Provider, { value: { activeItems, toggleItem, isItemActive }, children: /* @__PURE__ */ jsx("div", { className: `space-y-2 ${className}`, children }) });
 };
-const AccordionItem = ({
-  id,
-  children,
-  className = ""
-}) => {
+const AccordionItem = ({ id, children, className = "" }) => {
   return /* @__PURE__ */ jsx("div", { className: `overflow-hidden border-b border-gray-200 ${className}`, children });
 };
 const AccordionHeader = ({
@@ -1239,15 +1214,7 @@ const AccordionHeader = ({
       stroke: "#98A2B3",
       viewBox: "0 0 24 24",
       xmlns: "http://www.w3.org/2000/svg",
-      children: /* @__PURE__ */ jsx(
-        "path",
-        {
-          strokeLinecap: "round",
-          strokeLinejoin: "round",
-          strokeWidth: 2,
-          d: "M19 9l-7 7-7-7"
-        }
-      )
+      children: /* @__PURE__ */ jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M19 9l-7 7-7-7" })
     }
   );
   const handleClick = () => {
@@ -1326,10 +1293,7 @@ const ScoreBadge = ({ score }) => {
     }
   );
 };
-const CategoryHeader = ({
-  title,
-  categoryScore
-}) => {
+const CategoryHeader = ({ title, categoryScore }) => {
   return /* @__PURE__ */ jsxs("div", { className: "flex flex-row gap-4 items-center py-2", children: [
     /* @__PURE__ */ jsx("p", { className: "text-2xl font-semibold", children: title }),
     /* @__PURE__ */ jsx(ScoreBadge, { score: categoryScore })
@@ -1379,43 +1343,19 @@ const CategoryContent = ({
 const Details = ({ feedback }) => {
   return /* @__PURE__ */ jsx("div", { className: "flex flex-col gap-4 w-full", children: /* @__PURE__ */ jsxs(Accordion, { children: [
     /* @__PURE__ */ jsxs(AccordionItem, { id: "tone-style", children: [
-      /* @__PURE__ */ jsx(AccordionHeader, { itemId: "tone-style", children: /* @__PURE__ */ jsx(
-        CategoryHeader,
-        {
-          title: "Tone & Style",
-          categoryScore: feedback.toneAndStyle.score
-        }
-      ) }),
+      /* @__PURE__ */ jsx(AccordionHeader, { itemId: "tone-style", children: /* @__PURE__ */ jsx(CategoryHeader, { title: "Tone & Style", categoryScore: feedback.toneAndStyle.score }) }),
       /* @__PURE__ */ jsx(AccordionContent, { itemId: "tone-style", children: /* @__PURE__ */ jsx(CategoryContent, { tips: feedback.toneAndStyle.tips }) })
     ] }),
     /* @__PURE__ */ jsxs(AccordionItem, { id: "content", children: [
-      /* @__PURE__ */ jsx(AccordionHeader, { itemId: "content", children: /* @__PURE__ */ jsx(
-        CategoryHeader,
-        {
-          title: "Content",
-          categoryScore: feedback.content.score
-        }
-      ) }),
+      /* @__PURE__ */ jsx(AccordionHeader, { itemId: "content", children: /* @__PURE__ */ jsx(CategoryHeader, { title: "Content", categoryScore: feedback.content.score }) }),
       /* @__PURE__ */ jsx(AccordionContent, { itemId: "content", children: /* @__PURE__ */ jsx(CategoryContent, { tips: feedback.content.tips }) })
     ] }),
     /* @__PURE__ */ jsxs(AccordionItem, { id: "structure", children: [
-      /* @__PURE__ */ jsx(AccordionHeader, { itemId: "structure", children: /* @__PURE__ */ jsx(
-        CategoryHeader,
-        {
-          title: "Structure",
-          categoryScore: feedback.structure.score
-        }
-      ) }),
+      /* @__PURE__ */ jsx(AccordionHeader, { itemId: "structure", children: /* @__PURE__ */ jsx(CategoryHeader, { title: "Structure", categoryScore: feedback.structure.score }) }),
       /* @__PURE__ */ jsx(AccordionContent, { itemId: "structure", children: /* @__PURE__ */ jsx(CategoryContent, { tips: feedback.structure.tips }) })
     ] }),
     /* @__PURE__ */ jsxs(AccordionItem, { id: "skills", children: [
-      /* @__PURE__ */ jsx(AccordionHeader, { itemId: "skills", children: /* @__PURE__ */ jsx(
-        CategoryHeader,
-        {
-          title: "Skills",
-          categoryScore: feedback.skills.score
-        }
-      ) }),
+      /* @__PURE__ */ jsx(AccordionHeader, { itemId: "skills", children: /* @__PURE__ */ jsx(CategoryHeader, { title: "Skills", categoryScore: feedback.skills.score }) }),
       /* @__PURE__ */ jsx(AccordionContent, { itemId: "skills", children: /* @__PURE__ */ jsx(CategoryContent, { tips: feedback.skills.tips }) })
     ] })
   ] }) });

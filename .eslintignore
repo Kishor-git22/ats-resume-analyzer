@@ -1,0 +1,44 @@
+# Ignore specific files with linting issues
+app/components/Accordion.tsx
+app/components/FileUploader.tsx
+app/components/ResumeCard.tsx
+app/lib/pdf2img.ts
+app/routes/auth.tsx
+app/routes/home.tsx
+app/routes/resume.tsx
+app/routes/upload.tsx
+app/routes/wipe.tsx
+
+# Common patterns to ignore
+node_modules/
+build/
+dist/
+.next/
+*.d.ts
+*.js.map
+*.css
+*.scss
+*.svg
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.json
+*.md
+*.mdx
+*.test.*
+*.spec.*
+__tests__/
+coverage/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

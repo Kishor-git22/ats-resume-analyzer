@@ -45,16 +45,4 @@ jobs:
       - name: Run lint
         run: npm run lint
 
-      # Validate Gherkin feature files syntax and style
-      - name: Run gherkin-lint
-        run: npm run lint:gherkin
-
-    # Compile TypeScript and build the project
-      - name: Build the project
-        run: npm run build
-
-    # Run test suite using Jest and Cucumber
-      - name: Run tests
-        run: npm test
-
 

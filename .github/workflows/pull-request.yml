@@ -48,7 +48,4 @@ jobs:
       # Check for code quality issues using ESLint
       - name: Run lint
         run: npm run lint
-    
-
-      
-
+  

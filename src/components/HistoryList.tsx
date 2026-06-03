@@ -5,9 +5,10 @@ import type { ReviewHistoryItem } from '../lib/types';
 interface HistoryListProps {
   onSelect: (item: ReviewHistoryItem) => void;
   userId: string | null;
+  refreshTrigger?: number;
 }
 
-const HistoryList = ({ onSelect, userId }: HistoryListProps) => {
+const HistoryList = ({ onSelect, userId, refreshTrigger }: HistoryListProps) => {
   const [history, setHistory] = useState<ReviewHistoryItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -32,7 +33,7 @@ const HistoryList = ({ onSelect, userId }: HistoryListProps) => {
     };
 
     fetchHistory();
-  }, [userId]);
+  }, [userId, refreshTrigger]);
 
   if (!userId) {
     return (

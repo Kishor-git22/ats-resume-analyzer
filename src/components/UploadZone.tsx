@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { UploadCloud, FileText, Sparkles, AlertCircle } from 'lucide-react';
 import { extractTextFromPdf } from '../lib/pdfExtract';
 
@@ -13,7 +13,9 @@ const MAX_CHARS = 30_000;
 const MIN_CHARS = 100;
 
 const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
-  const [mode, setMode] = useState<Mode>('upload');
+  const [mode, setMode] = useState<Mode>(() => {
+    return (localStorage.getItem('app_uploadMode') as Mode) || 'upload';
+  });
   const [text, setText] = useState('');
   const [jobDescription, setJobDescription] = useState('');
   const [fileName, setFileName] = useState<string | null>(null);
@@ -21,6 +23,10 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    localStorage.setItem('app_uploadMode', mode);
+  }, [mode]);
 
   const handleFile = async (file: File) => {
     setError(null);
@@ -79,11 +85,11 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
   return (
     <div className="w-full max-w-3xl mx-auto">
       {/* Mode tabs */}
-      <div className="flex gap-2 mb-6 p-1 rounded-full glass-panel w-fit mx-auto">
+      <div className="grid grid-cols-2 gap-2 mb-6 p-1 rounded-full glass-panel max-w-[320px] w-full mx-auto">
         <button
           type="button"
           onClick={() => setMode('upload')}
-          className={`px-5 py-2.5 rounded-full text-sm uppercase tracking-widest font-medium transition-all duration-300 ${
+          className={`w-full py-2.5 rounded-full text-sm uppercase tracking-widest font-medium transition-all duration-300 ${
             mode === 'upload'
               ? 'bg-white text-[#0C0C0C] shadow-[0_0_15px_rgba(255,255,255,0.3)]'
               : 'text-[#D7E2EA]/60 hover:text-[#D7E2EA]'
@@ -94,7 +100,7 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
         <button
           type="button"
           onClick={() => setMode('paste')}
-          className={`px-5 py-2.5 rounded-full text-sm uppercase tracking-widest font-medium transition-all duration-300 ${
+          className={`w-full py-2.5 rounded-full text-sm uppercase tracking-widest font-medium transition-all duration-300 ${
             mode === 'paste'
               ? 'bg-white text-[#0C0C0C] shadow-[0_0_15px_rgba(255,255,255,0.3)]'
               : 'text-[#D7E2EA]/60 hover:text-[#D7E2EA]'

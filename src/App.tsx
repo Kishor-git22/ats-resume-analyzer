@@ -18,16 +18,51 @@ type AppState =
 
 const App = () => {
   const [state, setState] = useState<AppState>({ phase: 'idle' });
-  const [activeTab, setActiveTab] = useState<'upload' | 'history'>('upload');
+  const [activeTab, setActiveTab] = useState<'upload' | 'history'>(() => {
+    return (localStorage.getItem('app_activeTab') as 'upload' | 'history') || 'upload';
+  });
   const [cookieConsent, setCookieConsent] = useState<boolean>(!!Cookies.get('userId'));
-  const [stats, setStats] = useState<GlobalStats | null>(null);
+  const [stats, setStats] = useState<GlobalStats | null>(() => {
+    const cached = localStorage.getItem('app_globalStats');
+    return cached ? JSON.parse(cached) : null;
+  });
+  const [historyRefresh, setHistoryRefresh] = useState(0);
+
+  const renderStats = (className: string) => (
+    <div className={`grid grid-cols-1 sm:grid-cols-3 gap-4 text-center ${className}`}>
+      {[
+        { num: stats ? stats.totalReviews.toLocaleString() : '-', label: 'Resumes Analyzed' },
+        { num: stats ? stats.totalRewrites.toLocaleString() : '-', label: 'Bullets Rewritten' },
+        { num: stats ? `~${(stats.avgTimeMs / 1000).toFixed(1)}s` : '-', label: 'Avg Response Time' },
+      ].map((stat) => (
+        <div
+          key={stat.label}
+          className="glass-panel rounded-3xl p-5 flex flex-col items-center justify-center gap-2 transition-transform hover:-translate-y-1 duration-300"
+        >
+          <span className="score-gradient text-2xl sm:text-3xl font-black">
+            {stat.num}
+          </span>
+          <span className="text-[10px] sm:text-xs uppercase tracking-widest text-[#D7E2EA]/50 leading-tight">
+            {stat.label}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
 
   useEffect(() => {
     fetch('/api/stats')
       .then((res) => res.json())
-      .then((data) => setStats(data))
+      .then((data) => {
+        setStats(data);
+        localStorage.setItem('app_globalStats', JSON.stringify(data));
+      })
       .catch((err) => console.error('Failed to load stats', err));
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('app_activeTab', activeTab);
+  }, [activeTab]);
 
   const handleAcceptCookies = () => {
     Cookies.set('userId', uuidv4(), { expires: 365 });
@@ -50,6 +85,7 @@ const App = () => {
         throw new Error(data.error || 'Review failed.');
       }
 
+      setHistoryRefresh(prev => prev + 1);
       setState({ phase: 'result', resumeText, result: data as ReviewResult });
 
       // Scroll to top so the user sees the score
@@ -88,90 +124,85 @@ const App = () => {
         </span>
       </header>
 
-      <div className="flex-1 px-5 sm:px-8 md:px-10 pt-12 sm:pt-20 md:pt-24 pb-24 sm:pb-32">
+      <div className="flex-1 flex flex-col justify-center px-5 sm:px-8 md:px-10 py-6 md:py-8">
         {state.phase === 'idle' && (
-          <>
-            {/* Hero */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-              className="text-center flex flex-col items-center gap-6 mb-12 sm:mb-16"
-            >
-              <h1
-                className="hero-heading font-black uppercase leading-none tracking-tight"
-                style={{ fontSize: 'clamp(3rem, 11vw, 9rem)' }}
+          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-10 items-center lg:items-start my-auto">
+            {/* Left Column: Hero & Stats */}
+            <div className="flex flex-col gap-8 lg:gap-12 pt-0 lg:pt-4">
+              {/* Hero */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+                className="flex flex-col gap-6 text-center lg:text-left"
               >
-                Resume reviewer
-              </h1>
-              <p
-                className="max-w-2xl font-light text-[#D7E2EA]/70 leading-relaxed"
-                style={{ fontSize: 'clamp(1rem, 1.7vw, 1.25rem)' }}
-              >
-                Drop in your resume. Get a brutally honest, AI-powered review with
-                scores, strengths, weaknesses, and rewritten bullets — in seconds.
-              </p>
-            </motion.div>
+                <h1
+                  className="hero-heading font-black uppercase leading-none tracking-tight"
+                  style={{ fontSize: 'clamp(2.5rem, 5.5vw, 5rem)' }}
+                >
+                  Resume reviewer
+                </h1>
+                <p
+                  className="font-light text-[#D7E2EA]/70 leading-relaxed max-w-xl mx-auto lg:mx-0"
+                  style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.1rem)' }}
+                >
+                  Drop in your resume. Get a brutally honest, AI-powered review with
+                  scores, strengths, weaknesses, and rewritten bullets — in seconds.
+                </p>
+              </motion.div>
 
-            {/* Main Tabs */}
-            <div className="flex justify-center gap-3 mb-8">
-              <button
-                onClick={() => setActiveTab('upload')}
-                className={`px-8 py-3.5 rounded-full text-sm uppercase tracking-widest font-medium transition-all duration-300 ${
-                  activeTab === 'upload'
-                    ? 'bg-white text-[#0C0C0C] shadow-[0_0_20px_rgba(255,255,255,0.4)]'
-                    : 'glass-button text-[#D7E2EA]/70'
-                }`}
-              >
-                Analyze Resume
-              </button>
-              <button
-                onClick={() => setActiveTab('history')}
-                className={`px-8 py-3.5 rounded-full text-sm uppercase tracking-widest font-medium transition-all duration-300 ${
-                  activeTab === 'history'
-                    ? 'bg-white text-[#0C0C0C] shadow-[0_0_20px_rgba(255,255,255,0.4)]'
-                    : 'glass-button text-[#D7E2EA]/70'
-                }`}
-              >
-                My History
-              </button>
+              {/* Trust strip for Desktop (Hidden on Mobile) */}
+              {renderStats('hidden lg:grid lg:grid-cols-2 xl:grid-cols-3')}
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              {activeTab === 'upload' ? (
-                <UploadZone onSubmit={handleReview} isProcessing={false} />
-              ) : (
-                <HistoryList onSelect={handleSelectHistory} userId={cookieConsent ? Cookies.get('userId') || null : null} />
-              )}
-            </motion.div>
-
-            {/* Trust strip */}
-            {activeTab === 'upload' && (
-              <div className="mt-16 sm:mt-20 max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 text-center">
-                {[
-                  { num: stats ? stats.totalReviews.toLocaleString() : '-', label: 'Resumes Analyzed' },
-                  { num: stats ? stats.totalRewrites.toLocaleString() : '-', label: 'Bullets Rewritten' },
-                  { num: stats ? `~${(stats.avgTimeMs / 1000).toFixed(1)}s` : '-', label: 'Avg Response Time' },
-                ].map((stat) => (
-                  <div
-                    key={stat.label}
-                    className="glass-panel rounded-3xl p-6 flex flex-col items-center gap-3 transition-transform hover:-translate-y-1 duration-300"
-                  >
-                    <span className="score-gradient text-3xl sm:text-4xl font-black">
-                      {stat.num}
-                    </span>
-                    <span className="text-xs uppercase tracking-widest text-[#D7E2EA]/50">
-                      {stat.label}
-                    </span>
-                  </div>
-                ))}
+            {/* Right Column: Tabs & Upload/History */}
+            <div className="flex flex-col gap-6 w-full max-w-3xl mx-auto lg:mx-0 lg:max-w-none min-h-[500px] lg:min-h-[650px]">
+              {/* Main Tabs */}
+              <div className="grid grid-cols-2 gap-3 max-w-[400px] w-full mx-auto">
+                <button
+                  onClick={() => setActiveTab('upload')}
+                  className={`w-full py-3.5 rounded-full text-sm uppercase tracking-widest font-medium transition-all duration-300 ${
+                    activeTab === 'upload'
+                      ? 'bg-white text-[#0C0C0C] shadow-[0_0_20px_rgba(255,255,255,0.4)]'
+                      : 'glass-button text-[#D7E2EA]/70'
+                  }`}
+                >
+                  Analyze Resume
+                </button>
+                <button
+                  onClick={() => setActiveTab('history')}
+                  className={`w-full py-3.5 rounded-full text-sm uppercase tracking-widest font-medium transition-all duration-300 ${
+                    activeTab === 'history'
+                      ? 'bg-white text-[#0C0C0C] shadow-[0_0_20px_rgba(255,255,255,0.4)]'
+                      : 'glass-button text-[#D7E2EA]/70'
+                  }`}
+                >
+                  My History
+                </button>
               </div>
-            )}
-          </>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="w-full relative"
+              >
+                <div className={activeTab === 'upload' ? 'block' : 'hidden'}>
+                  <UploadZone onSubmit={handleReview} isProcessing={false} />
+                </div>
+                <div className={activeTab === 'history' ? 'block' : 'hidden'}>
+                  <HistoryList 
+                    onSelect={handleSelectHistory} 
+                    userId={cookieConsent ? Cookies.get('userId') || null : null} 
+                    refreshTrigger={historyRefresh} 
+                  />
+                </div>
+              </motion.div>
+
+              {/* Trust strip for Mobile (Hidden on Desktop) */}
+              {renderStats('grid lg:hidden mt-4')}
+            </div>
+          </div>
         )}
 
         {state.phase === 'loading' && <LoadingState />}

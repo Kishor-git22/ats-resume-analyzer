@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { parse } from 'cookie';
-import { getDb } from './lib/db.js';
+import { getDb } from './_lib/db.js';
 
 /**
  * Gemini structured-output schema. Gemini will return JSON that conforms
@@ -84,7 +84,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(500).json({
       error:
         'Server misconfigured: GEMINI_API_KEY environment variable not set. ' +
-        'Set it in Vercel project settings, or in a local .env file when using `vercel dev`.',
+        'Set it in Vercel project settings, or in a local .env.local file when using `vercel dev`.',
     });
   }
 

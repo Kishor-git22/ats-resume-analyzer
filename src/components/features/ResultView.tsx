@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowLeft, CheckCircle2, AlertTriangle, Sparkles, ChevronRight } from 'lucide-react';
-import type { ReviewResult, CategoryScores } from '../lib/types';
+import type { ReviewResult, CategoryScores } from '../../lib/types';
 
 interface ResultViewProps {
   result: ReviewResult;

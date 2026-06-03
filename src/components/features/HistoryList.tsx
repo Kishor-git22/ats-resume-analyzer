@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Clock, ChevronRight, FileText, Briefcase } from 'lucide-react';
-import type { ReviewHistoryItem } from '../lib/types';
+import type { ReviewHistoryItem } from '../../lib/types';
 
 interface HistoryListProps {
   onSelect: (item: ReviewHistoryItem) => void;

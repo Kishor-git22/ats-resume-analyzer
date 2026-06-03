@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { UploadCloud, FileText, Sparkles, AlertCircle } from 'lucide-react';
-import { extractTextFromPdf } from '../lib/pdfExtract';
+import { extractTextFromPdf } from '../../lib/pdfExtract';
 
 interface UploadZoneProps {
   onSubmit: (resumeText: string, jobDescription?: string) => void;

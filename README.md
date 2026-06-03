@@ -30,8 +30,8 @@ The resume text is processed in memory and never persisted.
 ### 2. Save the key locally
 
 ```bash
-cp .env.example .env
-# open .env in any editor, paste your key after GEMINI_API_KEY=
+cp .env.example .env.local
+# open .env.local in any editor, paste your key after GEMINI_API_KEY=
 ```
 
 ### 3. Install deps
@@ -58,7 +58,7 @@ vercel dev
 
 First time: it asks you a couple of questions (link to a Vercel project — say no/skip for purely local). Then opens at <http://localhost:3000>.
 
-> **Tip:** `vercel dev` reads your `.env` file automatically. No extra flags needed.
+> **Tip:** `vercel dev` reads your `.env.local` file automatically. No extra flags needed.
 
 If you just want to preview the UI without the AI call (no key needed), `npm run dev` works fine — but clicking "Review" will fail since `/api/review` isn't running.
 

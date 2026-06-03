@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import type { GlobalStats } from '../lib/types';
 import { fetchStats } from '../services/api';
 
@@ -8,7 +8,7 @@ export function useStats() {
     return cached ? JSON.parse(cached) : null;
   });
 
-  useEffect(() => {
+  const refreshStats = useCallback(() => {
     fetchStats()
       .then((data) => {
         setStats(data);
@@ -17,5 +17,9 @@ export function useStats() {
       .catch((err) => console.error('Failed to load stats', err));
   }, []);
 
-  return stats;
+  useEffect(() => {
+    refreshStats();
+  }, [refreshStats]);
+
+  return { stats, refreshStats };
 }

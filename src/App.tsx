@@ -18,12 +18,13 @@ import { useAppTabs } from './hooks/useAppTabs';
 import { useReview } from './hooks/useReview';
 
 export default function App() {
-  const stats = useStats();
+  const { stats, refreshStats } = useStats();
   const { activeTab, setActiveTab } = useAppTabs();
   const [historyRefresh, setHistoryRefresh] = useState(0);
 
   const { state, handleReview, showHistoryItem, reset } = useReview(() => {
     setHistoryRefresh((prev) => prev + 1);
+    refreshStats();
   });
 
   const [cookieConsent, setCookieConsent] = useState<boolean>(!!Cookies.get('userId'));

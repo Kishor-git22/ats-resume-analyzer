@@ -20,3 +20,19 @@ export interface ReviewResult {
   rewrites: Rewrite[];
   missingSections?: string[];
 }
+
+export interface ReviewHistoryItem {
+  _id: string;
+  userId: string;
+  resumeText: string;
+  jobDescription?: string | null;
+  result: ReviewResult;
+  createdAt: string;
+  timeTakenMs: number;
+}
+
+export interface GlobalStats {
+  totalReviews: number;
+  avgTimeMs: number;
+  totalRewrites: number;
+}

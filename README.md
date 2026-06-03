@@ -1,4 +1,4 @@
-# ResumeIQ — AI Resume Reviewer
+# ATS Resume Analyzer — AI Resume Reviewer
 
 Upload a resume PDF → AI returns a scored, structured review with strengths, weaknesses, and three rewritten bullets.
 
@@ -90,7 +90,7 @@ vercel --prod       # production deploy
 ## Project layout
 
 ```
-resumeiq/
+ats-resume-analyzer/
 ├── api/
 │   └── review.ts              # serverless function — calls Gemini
 ├── src/

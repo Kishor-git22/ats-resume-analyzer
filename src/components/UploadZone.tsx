@@ -3,7 +3,7 @@ import { UploadCloud, FileText, Sparkles, AlertCircle } from 'lucide-react';
 import { extractTextFromPdf } from '../lib/pdfExtract';
 
 interface UploadZoneProps {
-  onSubmit: (resumeText: string) => void;
+  onSubmit: (resumeText: string, jobDescription?: string) => void;
   isProcessing: boolean;
 }
 
@@ -15,6 +15,7 @@ const MIN_CHARS = 100;
 const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
   const [mode, setMode] = useState<Mode>('upload');
   const [text, setText] = useState('');
+  const [jobDescription, setJobDescription] = useState('');
   const [fileName, setFileName] = useState<string | null>(null);
   const [isExtracting, setIsExtracting] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -68,7 +69,7 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
       setError(`Need at least ${MIN_CHARS} characters of resume text.`);
       return;
     }
-    onSubmit(trimmed);
+    onSubmit(trimmed, jobDescription.trim() || undefined);
   };
 
   const charCount = text.length;
@@ -179,6 +180,17 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
           </div>
         </div>
       )}
+
+      {/* Job Description (Optional) */}
+      <div className="mt-4 w-full rounded-[32px] border border-[#D7E2EA]/15 bg-[#141418] overflow-hidden">
+        <textarea
+          value={jobDescription}
+          onChange={(e) => setJobDescription(e.target.value)}
+          placeholder="Paste the Job Description here (Optional) — helps the AI tailor the review…"
+          className="w-full h-32 p-5 sm:p-6 bg-transparent text-[#D7E2EA] font-light placeholder:text-[#D7E2EA]/30 resize-none focus:outline-none text-sm sm:text-base leading-relaxed"
+          style={{ fontFamily: "'Kanit', sans-serif" }}
+        />
+      </div>
 
       {/* Error banner */}
       {error && (

@@ -1,4 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { parse } from 'cookie';
+import { getDb } from './lib/db.js';
 
 /**
  * Gemini structured-output schema. Gemini will return JSON that conforms
@@ -80,7 +82,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   // Vercel auto-parses JSON bodies into req.body
-  const { resumeText } = (req.body ?? {}) as { resumeText?: unknown };
+  const { resumeText, jobDescription } = (req.body ?? {}) as { resumeText?: unknown; jobDescription?: unknown };
 
   if (typeof resumeText !== 'string') {
     return res.status(400).json({ error: 'Field `resumeText` (string) is required.' });
@@ -102,6 +104,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const model = 'gemini-2.5-flash';
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
+  const startTime = Date.now();
+  const cookies = parse(req.headers.cookie || '');
+  const userId = cookies.userId;
+
   try {
     const geminiRes = await fetch(url, {
       method: 'POST',
@@ -113,7 +119,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             role: 'user',
             parts: [
               {
-                text: `Review this resume and respond ONLY with JSON matching the provided schema.\n\n--- RESUME START ---\n${trimmed}\n--- RESUME END ---`,
+                text: `Review this resume and respond ONLY with JSON matching the provided schema.\n\n${jobDescription && typeof jobDescription === 'string' && jobDescription.trim().length > 0 ? `--- TARGET JOB DESCRIPTION ---\n${jobDescription.trim()}\n\n` : ''}--- RESUME START ---\n${trimmed}\n--- RESUME END ---`,
               },
             ],
           },
@@ -176,6 +182,39 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         error: `AI returned malformed JSON${finishReason === 'MAX_TOKENS' ? ' (response was truncated — too long).' : '.'} Try again.`,
       });
     }
+
+    const elapsed = Date.now() - startTime;
+    
+    // Save to MongoDB asynchronously (don't block the response)
+    getDb().then(async (db) => {
+      const statsCol = db.collection('stats');
+      await statsCol.findOneAndUpdate(
+        { id: 'global' },
+        { 
+          $inc: { 
+            totalReviews: 1, 
+            totalTimeMs: elapsed,
+            totalRewrites: parsed?.rewrites?.length || 0 
+          },
+          $set: { lastUpdated: new Date() }
+        },
+        { upsert: true }
+      );
+
+      if (userId) {
+        const reviewsCol = db.collection('reviews');
+        await reviewsCol.insertOne({
+          userId,
+          resumeText: trimmed,
+          jobDescription: typeof jobDescription === 'string' ? jobDescription.trim() : null,
+          result: parsed,
+          createdAt: new Date(),
+          timeTakenMs: elapsed,
+        });
+      }
+    }).catch((err) => {
+      console.error('MongoDB error:', err);
+    });
 
     return res.status(200).json(parsed);
   } catch (err) {

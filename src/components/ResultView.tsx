@@ -1,11 +1,5 @@
 import { motion } from 'framer-motion';
-import {
-  ArrowLeft,
-  CheckCircle2,
-  AlertTriangle,
-  Sparkles,
-  ChevronRight,
-} from 'lucide-react';
+import { ArrowLeft, CheckCircle2, AlertTriangle, Sparkles, ChevronRight } from 'lucide-react';
 import type { ReviewResult, CategoryScores } from '../lib/types';
 
 interface ResultViewProps {
@@ -93,39 +87,32 @@ const ResultView = ({ result, resumeText, onReset }: ResultViewProps) => {
         transition={{ duration: 0.6, delay: 0.15 }}
         className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4"
       >
-        {(Object.keys(CATEGORY_LABELS) as Array<keyof CategoryScores>).map(
-          (key) => {
-            const score = result.categoryScores[key];
-            return (
-              <div
-                key={key}
-                className="rounded-3xl glass-panel p-5 sm:p-6 flex flex-col gap-3"
+        {(Object.keys(CATEGORY_LABELS) as Array<keyof CategoryScores>).map((key) => {
+          const score = result.categoryScores[key];
+          return (
+            <div key={key} className="rounded-3xl glass-panel p-5 sm:p-6 flex flex-col gap-3">
+              <span className="text-xs uppercase tracking-widest text-[#D7E2EA]/50">
+                {CATEGORY_LABELS[key]}
+              </span>
+              <span
+                className="text-3xl sm:text-4xl font-black"
+                style={{ color: scoreColor(score) }}
               >
-                <span className="text-xs uppercase tracking-widest text-[#D7E2EA]/50">
-                  {CATEGORY_LABELS[key]}
-                </span>
-                <span
-                  className="text-3xl sm:text-4xl font-black"
-                  style={{ color: scoreColor(score) }}
-                >
-                  {score}
-                  <span className="text-base text-[#D7E2EA]/30 font-light">
-                    /100
-                  </span>
-                </span>
-                <div className="h-1.5 w-full rounded-full bg-black/40 overflow-hidden shadow-inner">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${score}%` }}
-                    transition={{ duration: 0.9, delay: 0.3, ease: 'easeOut' }}
-                    className="h-full rounded-full"
-                    style={{ background: scoreColor(score) }}
-                  />
-                </div>
+                {score}
+                <span className="text-base text-[#D7E2EA]/30 font-light">/100</span>
+              </span>
+              <div className="h-1.5 w-full rounded-full bg-black/40 overflow-hidden shadow-inner">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${score}%` }}
+                  transition={{ duration: 0.9, delay: 0.3, ease: 'easeOut' }}
+                  className="h-full rounded-full"
+                  style={{ background: scoreColor(score) }}
+                />
               </div>
-            );
-          },
-        )}
+            </div>
+          );
+        })}
       </motion.div>
 
       {/* Strengths + Weaknesses two-column */}

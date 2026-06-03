@@ -10,14 +10,11 @@ interface HistoryListProps {
 
 const HistoryList = ({ onSelect, userId, refreshTrigger }: HistoryListProps) => {
   const [history, setHistory] = useState<ReviewHistoryItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(!!userId);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!userId) {
-      setIsLoading(false);
-      return;
-    }
+    if (!userId) return;
 
     const fetchHistory = async () => {
       try {
@@ -25,7 +22,7 @@ const HistoryList = ({ onSelect, userId, refreshTrigger }: HistoryListProps) => 
         if (!res.ok) throw new Error('Failed to fetch history');
         const data = await res.json();
         setHistory(data);
-      } catch (err) {
+      } catch {
         setError('Could not load history.');
       } finally {
         setIsLoading(false);
@@ -41,7 +38,8 @@ const HistoryList = ({ onSelect, userId, refreshTrigger }: HistoryListProps) => 
         <Clock size={40} className="mx-auto mb-4 text-[#D7E2EA]/40" strokeWidth={1.5} />
         <h3 className="text-xl font-medium text-[#D7E2EA] mb-2">History Disabled</h3>
         <p className="text-[#D7E2EA]/60 font-light max-w-sm mx-auto">
-          Please accept cookies at the bottom of the screen to enable saving and viewing your review history.
+          Please accept cookies at the bottom of the screen to enable saving and viewing your review
+          history.
         </p>
       </div>
     );
@@ -85,7 +83,7 @@ const HistoryList = ({ onSelect, userId, refreshTrigger }: HistoryListProps) => 
           day: 'numeric',
           year: 'numeric',
         });
-        
+
         return (
           <button
             key={item._id}
@@ -97,11 +95,9 @@ const HistoryList = ({ onSelect, userId, refreshTrigger }: HistoryListProps) => 
                 <span className="text-[#D7E2EA] font-medium text-lg">
                   Score: {item.result.overallScore}
                 </span>
-                <span className="text-[#D7E2EA]/40 text-xs uppercase tracking-widest">
-                  {date}
-                </span>
+                <span className="text-[#D7E2EA]/40 text-xs uppercase tracking-widest">{date}</span>
               </div>
-              
+
               <div className="flex items-center gap-4 text-sm text-[#D7E2EA]/70">
                 <div className="flex items-center gap-1.5">
                   <FileText size={14} className="text-[#D7E2EA]/50" />
@@ -112,17 +108,15 @@ const HistoryList = ({ onSelect, userId, refreshTrigger }: HistoryListProps) => 
                 {item.jobDescription && (
                   <div className="flex items-center gap-1.5 hidden sm:flex">
                     <Briefcase size={14} className="text-[#D7E2EA]/50" />
-                    <span className="truncate max-w-[200px]">
-                      Tailored for Job
-                    </span>
+                    <span className="truncate max-w-[200px]">Tailored for Job</span>
                   </div>
                 )}
               </div>
             </div>
-            
-            <ChevronRight 
-              size={24} 
-              className="text-[#D7E2EA]/20 group-hover:text-[#D7E2EA]/60 transition-colors" 
+
+            <ChevronRight
+              size={24}
+              className="text-[#D7E2EA]/20 group-hover:text-[#D7E2EA]/60 transition-colors"
             />
           </button>
         );

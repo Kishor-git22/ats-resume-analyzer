@@ -31,9 +31,7 @@ export async function extractTextFromPdf(file: File): Promise<string> {
   for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
     const page = await pdf.getPage(pageNum);
     const content = await page.getTextContent();
-    const pageText = content.items
-      .map((item) => (item as TextItemLike).str)
-      .join(' ');
+    const pageText = content.items.map((item) => (item as TextItemLike).str).join(' ');
     fullText += pageText + '\n';
   }
 

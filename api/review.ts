@@ -41,8 +41,14 @@ const RESPONSE_SCHEMA = {
         type: 'object',
         properties: {
           original: { type: 'string', description: 'Bullet copied verbatim.' },
-          suggested: { type: 'string', description: 'Stronger rewrite — quantified, active voice.' },
-          reason: { type: 'string', description: 'One short sentence on why the rewrite is better.' },
+          suggested: {
+            type: 'string',
+            description: 'Stronger rewrite — quantified, active voice.',
+          },
+          reason: {
+            type: 'string',
+            description: 'One short sentence on why the rewrite is better.',
+          },
         },
         required: ['original', 'suggested', 'reason'],
       },
@@ -50,7 +56,8 @@ const RESPONSE_SCHEMA = {
     missingSections: {
       type: 'array',
       items: { type: 'string' },
-      description: 'Standard sections (e.g. Skills, Projects, Education) that appear to be missing.',
+      description:
+        'Standard sections (e.g. Skills, Projects, Education) that appear to be missing.',
     },
   },
   required: ['overallScore', 'categoryScores', 'summary', 'strengths', 'weaknesses', 'rewrites'],
@@ -82,7 +89,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   // Vercel auto-parses JSON bodies into req.body
-  const { resumeText, jobDescription } = (req.body ?? {}) as { resumeText?: unknown; jobDescription?: unknown };
+  const { resumeText, jobDescription } = (req.body ?? {}) as {
+    resumeText?: unknown;
+    jobDescription?: unknown;
+  };
 
   if (typeof resumeText !== 'string') {
     return res.status(400).json({ error: 'Field `resumeText` (string) is required.' });
@@ -189,22 +199,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const elapsed = Date.now() - startTime;
-    
+
     // Save to MongoDB synchronously before responding
     try {
       const db = await getDb();
       const statsCol = db.collection('stats');
       await statsCol.findOneAndUpdate(
         { id: 'global' },
-        { 
-          $inc: { 
-            totalReviews: 1, 
+        {
+          $inc: {
+            totalReviews: 1,
             totalTimeMs: elapsed,
-            totalRewrites: parsed?.rewrites?.length || 0 
+            totalRewrites: parsed?.rewrites?.length || 0,
           },
-          $set: { lastUpdated: new Date() }
+          $set: { lastUpdated: new Date() },
         },
-        { upsert: true }
+        { upsert: true },
       );
 
       if (userId) {

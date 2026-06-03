@@ -50,7 +50,7 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
       const code = err instanceof Error ? err.message : 'PDF_INVALID';
       if (code === 'PDF_NO_TEXT') {
         setError(
-          "Couldn't extract text — this looks like a scanned/image PDF. Switch to \"Paste text\" instead.",
+          'Couldn\'t extract text — this looks like a scanned/image PDF. Switch to "Paste text" instead.',
         );
       } else {
         setError("That doesn't look like a valid PDF. Try a different file.");
@@ -181,7 +181,9 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
             style={{ fontFamily: "'Kanit', sans-serif" }}
           />
           <div className="flex items-center justify-between px-5 sm:px-6 py-3 border-t border-[#D7E2EA]/10 text-xs text-[#D7E2EA]/50 uppercase tracking-widest bg-black/20">
-            <span>{charCount.toLocaleString()} / {MAX_CHARS.toLocaleString()} chars</span>
+            <span>
+              {charCount.toLocaleString()} / {MAX_CHARS.toLocaleString()} chars
+            </span>
             <span>{charCount < MIN_CHARS ? `${MIN_CHARS - charCount} more needed` : 'Ready'}</span>
           </div>
         </div>
@@ -216,8 +218,7 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
           style={{
             background:
               'linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)',
-            boxShadow:
-              '0px 4px 4px rgba(181, 1, 167, 0.25), 4px 4px 12px #7721B1 inset',
+            boxShadow: '0px 4px 4px rgba(181, 1, 167, 0.25), 4px 4px 12px #7721B1 inset',
             outline: '2px solid #FFFFFF',
             outlineOffset: '-3px',
           }}

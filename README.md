@@ -111,14 +111,14 @@ ats-resume-analyzer/
 
 ## Common tweaks
 
-| Want to change | File / line |
-|---|---|
-| The AI's review style / strictness | `api/review.ts` — `SYSTEM_INSTRUCTIONS` |
-| Output structure (add fields, etc.) | `api/review.ts` — `RESPONSE_SCHEMA` + `src/lib/types.ts` |
-| The hero copy | `src/App.tsx` |
-| Colors / fonts | `src/index.css` |
-| Model (e.g. switch to `gemini-2.5-flash-lite`) | `api/review.ts` — the `model` variable |
-| Char limits | `api/review.ts` and `src/components/UploadZone.tsx` |
+| Want to change                                 | File / line                                              |
+| ---------------------------------------------- | -------------------------------------------------------- |
+| The AI's review style / strictness             | `api/review.ts` — `SYSTEM_INSTRUCTIONS`                  |
+| Output structure (add fields, etc.)            | `api/review.ts` — `RESPONSE_SCHEMA` + `src/lib/types.ts` |
+| The hero copy                                  | `src/App.tsx`                                            |
+| Colors / fonts                                 | `src/index.css`                                          |
+| Model (e.g. switch to `gemini-2.5-flash-lite`) | `api/review.ts` — the `model` variable                   |
+| Char limits                                    | `api/review.ts` and `src/components/UploadZone.tsx`      |
 
 ## Costs
 

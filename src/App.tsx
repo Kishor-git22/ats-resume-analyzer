@@ -33,15 +33,16 @@ const App = () => {
       {[
         { num: stats ? stats.totalReviews.toLocaleString() : '-', label: 'Resumes Analyzed' },
         { num: stats ? stats.totalRewrites.toLocaleString() : '-', label: 'Bullets Rewritten' },
-        { num: stats ? `~${(stats.avgTimeMs / 1000).toFixed(1)}s` : '-', label: 'Avg Response Time' },
+        {
+          num: stats ? `~${(stats.avgTimeMs / 1000).toFixed(1)}s` : '-',
+          label: 'Avg Response Time',
+        },
       ].map((stat) => (
         <div
           key={stat.label}
           className="glass-panel rounded-3xl p-5 flex flex-col items-center justify-center gap-2 transition-transform hover:-translate-y-1 duration-300"
         >
-          <span className="score-gradient text-2xl sm:text-3xl font-black">
-            {stat.num}
-          </span>
+          <span className="score-gradient text-2xl sm:text-3xl font-black">{stat.num}</span>
           <span className="text-[10px] sm:text-xs uppercase tracking-widest text-[#D7E2EA]/50 leading-tight">
             {stat.label}
           </span>
@@ -85,7 +86,7 @@ const App = () => {
         throw new Error(data.error || 'Review failed.');
       }
 
-      setHistoryRefresh(prev => prev + 1);
+      setHistoryRefresh((prev) => prev + 1);
       setState({ phase: 'result', resumeText, result: data as ReviewResult });
 
       // Scroll to top so the user sees the score
@@ -114,9 +115,7 @@ const App = () => {
           href="/"
           className="flex items-center gap-2 text-[#D7E2EA] font-medium uppercase tracking-widest text-sm sm:text-base"
         >
-          <span className="score-gradient font-black text-xl sm:text-2xl">
-            R
-          </span>
+          <span className="score-gradient font-black text-xl sm:text-2xl">R</span>
           ATS Resume Analyzer
         </a>
         <span className="text-xs sm:text-sm uppercase tracking-widest text-[#D7E2EA]/40">
@@ -146,8 +145,8 @@ const App = () => {
                   className="font-light text-[#D7E2EA]/70 leading-relaxed max-w-xl mx-auto lg:mx-0"
                   style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.1rem)' }}
                 >
-                  Drop in your resume. Get a brutally honest, AI-powered review with
-                  scores, strengths, weaknesses, and rewritten bullets — in seconds.
+                  Drop in your resume. Get a brutally honest, AI-powered review with scores,
+                  strengths, weaknesses, and rewritten bullets — in seconds.
                 </p>
               </motion.div>
 
@@ -191,10 +190,10 @@ const App = () => {
                   <UploadZone onSubmit={handleReview} isProcessing={false} />
                 </div>
                 <div className={activeTab === 'history' ? 'block' : 'hidden'}>
-                  <HistoryList 
-                    onSelect={handleSelectHistory} 
-                    userId={cookieConsent ? Cookies.get('userId') || null : null} 
-                    refreshTrigger={historyRefresh} 
+                  <HistoryList
+                    onSelect={handleSelectHistory}
+                    userId={cookieConsent ? Cookies.get('userId') || null : null}
+                    refreshTrigger={historyRefresh}
                   />
                 </div>
               </motion.div>
@@ -208,19 +207,13 @@ const App = () => {
         {state.phase === 'loading' && <LoadingState />}
 
         {state.phase === 'result' && (
-          <ResultView
-            result={state.result}
-            resumeText={state.resumeText}
-            onReset={reset}
-          />
+          <ResultView result={state.result} resumeText={state.resumeText} onReset={reset} />
         )}
 
         {state.phase === 'error' && (
           <div className="max-w-xl mx-auto flex flex-col items-center gap-6 py-16 text-center">
             <AlertCircle size={48} className="text-red-400" strokeWidth={1.4} />
-            <h2 className="text-2xl font-medium text-[#D7E2EA]">
-              Couldn't review that resume
-            </h2>
+            <h2 className="text-2xl font-medium text-[#D7E2EA]">Couldn't review that resume</h2>
             <p className="text-[#D7E2EA]/70 leading-relaxed">{state.error}</p>
             <button
               type="button"
@@ -237,8 +230,8 @@ const App = () => {
       <footer className="glass-panel border-x-0 border-b-0 rounded-none px-6 md:px-10 pt-6 pb-6 sm:flex-row items-center justify-between gap-4 text-xs uppercase tracking-widest text-[#D7E2EA]/60 flex flex-col">
         <span>© 2026 Kishor Annamalai</span>
         <span className="text-center sm:text-right">
-          {cookieConsent 
-            ? 'Your history is saved in your browser via cookies.' 
+          {cookieConsent
+            ? 'Your history is saved in your browser via cookies.'
             : 'Your resume is processed in real time and never stored.'}
         </span>
       </footer>

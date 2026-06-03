@@ -18,11 +18,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const db = await getDb();
     const reviewsCol = db.collection('reviews');
-    const reviews = await reviewsCol
-      .find({ userId })
-      .sort({ createdAt: -1 })
-      .limit(50)
-      .toArray();
+    const reviews = await reviewsCol.find({ userId }).sort({ createdAt: -1 }).limit(50).toArray();
 
     return res.status(200).json(reviews);
   } catch (err) {

@@ -148,6 +148,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           error: 'Gemini rejected the request — likely an invalid API key. Check GEMINI_API_KEY.',
         });
       }
+      if (geminiRes.status === 503) {
+        return res.status(503).json({
+          error: 'We are experiencing high demand, please try again later.',
+        });
+      }
       return res.status(502).json({ error: 'AI provider failed. Try again in a moment.' });
     }
 
@@ -185,8 +190,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const elapsed = Date.now() - startTime;
     
-    // Save to MongoDB asynchronously (don't block the response)
-    getDb().then(async (db) => {
+    // Save to MongoDB synchronously before responding
+    try {
+      const db = await getDb();
       const statsCol = db.collection('stats');
       await statsCol.findOneAndUpdate(
         { id: 'global' },
@@ -212,9 +218,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           timeTakenMs: elapsed,
         });
       }
-    }).catch((err) => {
+    } catch (err) {
       console.error('MongoDB error:', err);
-    });
+    }
 
     return res.status(200).json(parsed);
   } catch (err) {

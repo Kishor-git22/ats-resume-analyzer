@@ -44,7 +44,7 @@ const ResultView = ({ result, resumeText, onReset }: ResultViewProps) => {
         <button
           type="button"
           onClick={onReset}
-          className="inline-flex items-center gap-2 text-sm uppercase tracking-widest text-[#D7E2EA]/60 hover:text-[#D7E2EA] transition-colors"
+          className="inline-flex items-center gap-2 text-sm uppercase tracking-widest glass-button px-4 py-2 rounded-full text-[#D7E2EA]/80 hover:text-white"
         >
           <ArrowLeft size={16} strokeWidth={1.8} />
           Review another
@@ -99,7 +99,7 @@ const ResultView = ({ result, resumeText, onReset }: ResultViewProps) => {
             return (
               <div
                 key={key}
-                className="rounded-3xl border border-[#D7E2EA]/15 bg-[#141418] p-5 sm:p-6 flex flex-col gap-3"
+                className="rounded-3xl glass-panel p-5 sm:p-6 flex flex-col gap-3"
               >
                 <span className="text-xs uppercase tracking-widest text-[#D7E2EA]/50">
                   {CATEGORY_LABELS[key]}
@@ -113,7 +113,7 @@ const ResultView = ({ result, resumeText, onReset }: ResultViewProps) => {
                     /100
                   </span>
                 </span>
-                <div className="h-1.5 w-full rounded-full bg-[#0C0C0C] overflow-hidden">
+                <div className="h-1.5 w-full rounded-full bg-black/40 overflow-hidden shadow-inner">
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${score}%` }}
@@ -134,7 +134,7 @@ const ResultView = ({ result, resumeText, onReset }: ResultViewProps) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.25 }}
-          className="rounded-3xl border border-green-500/20 bg-green-500/5 p-6 sm:p-8 flex flex-col gap-5"
+          className="rounded-3xl border border-green-500/30 bg-green-500/10 backdrop-blur-md p-6 sm:p-8 flex flex-col gap-5 shadow-[0_8px_32px_rgba(34,197,94,0.1)]"
         >
           <div className="flex items-center gap-3">
             <CheckCircle2 size={22} className="text-green-400" strokeWidth={1.6} />
@@ -158,7 +158,7 @@ const ResultView = ({ result, resumeText, onReset }: ResultViewProps) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="rounded-3xl border border-amber-500/20 bg-amber-500/5 p-6 sm:p-8 flex flex-col gap-5"
+          className="rounded-3xl border border-amber-500/30 bg-amber-500/10 backdrop-blur-md p-6 sm:p-8 flex flex-col gap-5 shadow-[0_8px_32px_rgba(245,158,11,0.1)]"
         >
           <div className="flex items-center gap-3">
             <AlertTriangle size={22} className="text-amber-400" strokeWidth={1.6} />
@@ -185,7 +185,7 @@ const ResultView = ({ result, resumeText, onReset }: ResultViewProps) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.35 }}
-          className="rounded-3xl border border-[#D7E2EA]/15 bg-[#141418] p-6 sm:p-8 flex flex-col gap-4"
+          className="rounded-3xl glass-panel p-6 sm:p-8 flex flex-col gap-4"
         >
           <h3 className="text-lg sm:text-xl font-medium uppercase tracking-widest text-[#D7E2EA]">
             Missing sections
@@ -194,7 +194,7 @@ const ResultView = ({ result, resumeText, onReset }: ResultViewProps) => {
             {result.missingSections.map((m, i) => (
               <span
                 key={i}
-                className="px-4 py-1.5 rounded-full border border-[#D7E2EA]/20 text-sm text-[#D7E2EA]/80"
+                className="px-4 py-1.5 rounded-full border border-[#D7E2EA]/20 bg-white/5 text-sm text-[#D7E2EA]/90"
               >
                 {m}
               </span>
@@ -221,7 +221,7 @@ const ResultView = ({ result, resumeText, onReset }: ResultViewProps) => {
           {result.rewrites.map((r, i) => (
             <article
               key={i}
-              className="rounded-3xl border border-[#D7E2EA]/15 bg-[#141418] p-5 sm:p-6 md:p-7 flex flex-col gap-4"
+              className="rounded-3xl glass-panel p-5 sm:p-6 md:p-7 flex flex-col gap-4"
             >
               <div className="flex items-center gap-3">
                 <span className="text-xs uppercase tracking-widest text-[#D7E2EA]/40">
@@ -233,7 +233,7 @@ const ResultView = ({ result, resumeText, onReset }: ResultViewProps) => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-3 md:gap-5 items-stretch">
-                <div className="rounded-2xl bg-[#0C0C0C] border border-amber-500/15 p-4 sm:p-5">
+                <div className="rounded-2xl glass-input border-amber-500/20 p-4 sm:p-5">
                   <span className="text-xs uppercase tracking-widest text-amber-400/70 block mb-2">
                     Original
                   </span>
@@ -246,7 +246,7 @@ const ResultView = ({ result, resumeText, onReset }: ResultViewProps) => {
                   <ChevronRight size={22} className="text-[#D7E2EA]/40" strokeWidth={1.6} />
                 </div>
 
-                <div className="rounded-2xl bg-[#0C0C0C] border border-green-500/20 p-4 sm:p-5">
+                <div className="rounded-2xl glass-input border-green-500/30 p-4 sm:p-5 shadow-[inset_0_2px_10px_rgba(34,197,94,0.1)]">
                   <span className="text-xs uppercase tracking-widest text-green-400/80 block mb-2">
                     Suggested
                   </span>
@@ -265,7 +265,7 @@ const ResultView = ({ result, resumeText, onReset }: ResultViewProps) => {
         <button
           type="button"
           onClick={onReset}
-          className="inline-flex items-center gap-3 rounded-full border-2 border-[#D7E2EA] px-10 py-4 text-sm sm:text-base font-medium uppercase tracking-widest text-[#D7E2EA] hover:bg-[#D7E2EA]/10 transition-colors"
+          className="inline-flex items-center gap-3 rounded-full glass-button border-2 border-white/20 px-10 py-4 text-sm sm:text-base font-medium uppercase tracking-widest text-[#D7E2EA] hover:bg-white/10 hover:border-white/40 transition-all shadow-lg"
         >
           <ArrowLeft size={18} strokeWidth={1.8} />
           Review another resume

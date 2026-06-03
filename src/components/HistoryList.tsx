@@ -36,8 +36,8 @@ const HistoryList = ({ onSelect, userId }: HistoryListProps) => {
 
   if (!userId) {
     return (
-      <div className="w-full max-w-3xl mx-auto mt-10 p-10 text-center rounded-[32px] border border-[#D7E2EA]/15 bg-[#141418]">
-        <Clock size={40} className="mx-auto mb-4 text-[#D7E2EA]/30" strokeWidth={1.5} />
+      <div className="w-full max-w-3xl mx-auto mt-10 p-10 text-center rounded-[32px] glass-panel">
+        <Clock size={40} className="mx-auto mb-4 text-[#D7E2EA]/40" strokeWidth={1.5} />
         <h3 className="text-xl font-medium text-[#D7E2EA] mb-2">History Disabled</h3>
         <p className="text-[#D7E2EA]/60 font-light max-w-sm mx-auto">
           Please accept cookies at the bottom of the screen to enable saving and viewing your review history.
@@ -48,8 +48,8 @@ const HistoryList = ({ onSelect, userId }: HistoryListProps) => {
 
   if (isLoading) {
     return (
-      <div className="w-full max-w-3xl mx-auto mt-10 p-10 text-center rounded-[32px] border border-[#D7E2EA]/15 bg-[#141418]">
-        <div className="animate-soft-pulse text-[#D7E2EA]/60 uppercase tracking-widest text-sm">
+      <div className="w-full max-w-3xl mx-auto mt-10 p-10 text-center rounded-[32px] glass-panel">
+        <div className="animate-soft-pulse text-[#D7E2EA]/70 uppercase tracking-widest text-sm">
           Loading history...
         </div>
       </div>
@@ -58,16 +58,16 @@ const HistoryList = ({ onSelect, userId }: HistoryListProps) => {
 
   if (error) {
     return (
-      <div className="w-full max-w-3xl mx-auto mt-10 p-10 text-center rounded-[32px] border border-red-500/20 bg-red-500/5">
-        <p className="text-red-300 text-sm">{error}</p>
+      <div className="w-full max-w-3xl mx-auto mt-10 p-10 text-center rounded-[32px] glass-panel border-red-500/40 bg-red-500/10">
+        <p className="text-red-200 text-sm">{error}</p>
       </div>
     );
   }
 
   if (history.length === 0) {
     return (
-      <div className="w-full max-w-3xl mx-auto mt-10 p-10 text-center rounded-[32px] border border-[#D7E2EA]/15 bg-[#141418]">
-        <Clock size={40} className="mx-auto mb-4 text-[#D7E2EA]/30" strokeWidth={1.5} />
+      <div className="w-full max-w-3xl mx-auto mt-10 p-10 text-center rounded-[32px] glass-panel">
+        <Clock size={40} className="mx-auto mb-4 text-[#D7E2EA]/40" strokeWidth={1.5} />
         <h3 className="text-xl font-medium text-[#D7E2EA] mb-2">No past reviews</h3>
         <p className="text-[#D7E2EA]/60 font-light max-w-sm mx-auto">
           Submit your first resume to see your history here.
@@ -89,7 +89,7 @@ const HistoryList = ({ onSelect, userId }: HistoryListProps) => {
           <button
             key={item._id}
             onClick={() => onSelect(item)}
-            className="w-full text-left p-5 sm:p-6 rounded-[24px] border border-[#D7E2EA]/15 bg-[#141418] hover:bg-[#1a1a20] hover:border-[#D7E2EA]/30 transition-all group flex items-center justify-between"
+            className="w-full text-left p-5 sm:p-6 rounded-[24px] glass-panel hover:glass-panel-heavy hover:scale-[1.01] active:scale-100 transition-all duration-300 group flex items-center justify-between"
           >
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3">

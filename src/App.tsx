@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { AlertCircle } from 'lucide-react';
 import Cookies from 'js-cookie';
 import { v4 as uuidv4 } from 'uuid';
@@ -71,9 +71,9 @@ const App = () => {
   };
 
   return (
-    <main className="relative min-h-screen w-full bg-[#0C0C0C] pb-24">
+    <main className="relative min-h-screen w-full bg-transparent flex flex-col">
       {/* Header */}
-      <header className="w-full px-6 md:px-10 pt-6 md:pt-8 flex items-center justify-between">
+      <header className="sticky top-0 z-50 w-full px-6 md:px-10 py-4 md:py-5 flex items-center justify-between glass-panel border-x-0 border-t-0 rounded-none bg-white/5 backdrop-blur-2xl">
         <a
           href="/"
           className="flex items-center gap-2 text-[#D7E2EA] font-medium uppercase tracking-widest text-sm sm:text-base"
@@ -88,7 +88,7 @@ const App = () => {
         </span>
       </header>
 
-      <div className="px-5 sm:px-8 md:px-10 pt-12 sm:pt-20 md:pt-24 pb-16">
+      <div className="flex-1 px-5 sm:px-8 md:px-10 pt-12 sm:pt-20 md:pt-24 pb-24 sm:pb-32">
         {state.phase === 'idle' && (
           <>
             {/* Hero */}
@@ -114,23 +114,23 @@ const App = () => {
             </motion.div>
 
             {/* Main Tabs */}
-            <div className="flex justify-center gap-4 mb-8">
+            <div className="flex justify-center gap-3 mb-8">
               <button
                 onClick={() => setActiveTab('upload')}
-                className={`px-6 py-3 rounded-full text-sm uppercase tracking-widest font-medium transition-colors ${
+                className={`px-8 py-3.5 rounded-full text-sm uppercase tracking-widest font-medium transition-all duration-300 ${
                   activeTab === 'upload'
-                    ? 'bg-[#D7E2EA] text-[#0C0C0C]'
-                    : 'bg-[#141418] text-[#D7E2EA]/60 hover:text-[#D7E2EA] border border-[#D7E2EA]/15'
+                    ? 'bg-white text-[#0C0C0C] shadow-[0_0_20px_rgba(255,255,255,0.4)]'
+                    : 'glass-button text-[#D7E2EA]/70'
                 }`}
               >
                 Analyze Resume
               </button>
               <button
                 onClick={() => setActiveTab('history')}
-                className={`px-6 py-3 rounded-full text-sm uppercase tracking-widest font-medium transition-colors ${
+                className={`px-8 py-3.5 rounded-full text-sm uppercase tracking-widest font-medium transition-all duration-300 ${
                   activeTab === 'history'
-                    ? 'bg-[#D7E2EA] text-[#0C0C0C]'
-                    : 'bg-[#141418] text-[#D7E2EA]/60 hover:text-[#D7E2EA] border border-[#D7E2EA]/15'
+                    ? 'bg-white text-[#0C0C0C] shadow-[0_0_20px_rgba(255,255,255,0.4)]'
+                    : 'glass-button text-[#D7E2EA]/70'
                 }`}
               >
                 My History
@@ -159,7 +159,7 @@ const App = () => {
                 ].map((stat) => (
                   <div
                     key={stat.label}
-                    className="rounded-2xl border border-[#D7E2EA]/10 bg-[#141418]/50 p-5 flex flex-col items-center gap-2"
+                    className="glass-panel rounded-3xl p-6 flex flex-col items-center gap-3 transition-transform hover:-translate-y-1 duration-300"
                   >
                     <span className="score-gradient text-3xl sm:text-4xl font-black">
                       {stat.num}
@@ -203,9 +203,9 @@ const App = () => {
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-[#D7E2EA]/10 px-6 md:px-10 py-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs uppercase tracking-widest text-[#D7E2EA]/40">
-        <span>© 2026 Harsh Goyal</span>
-        <span>
+      <footer className="glass-panel border-x-0 border-b-0 rounded-none px-6 md:px-10 pt-6 pb-6 sm:flex-row items-center justify-between gap-4 text-xs uppercase tracking-widest text-[#D7E2EA]/60 flex flex-col">
+        <span>© 2026 Kishor Annamalai</span>
+        <span className="text-center sm:text-right">
           {cookieConsent 
             ? 'Your history is saved in your browser via cookies.' 
             : 'Your resume is processed in real time and never stored.'}
@@ -213,27 +213,35 @@ const App = () => {
       </footer>
 
       {/* Cookie Consent Banner */}
-      {!cookieConsent && (
-        <div className="fixed bottom-0 left-0 w-full bg-[#B600A8]/20 border-t border-[#B600A8]/40 backdrop-blur-md p-4 sm:p-6 z-50 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-sm text-[#D7E2EA]">
-            We use a cookie to save your review history locally. No account needed.
-          </div>
-          <div className="flex gap-3">
-            <button
-              onClick={() => setCookieConsent(true)}
-              className="px-5 py-2 rounded-full text-xs uppercase tracking-widest font-medium border border-[#D7E2EA]/30 text-[#D7E2EA]/70 hover:text-[#D7E2EA] hover:bg-[#D7E2EA]/10 transition-colors"
-            >
-              Decline
-            </button>
-            <button
-              onClick={handleAcceptCookies}
-              className="px-5 py-2 rounded-full text-xs uppercase tracking-widest font-medium bg-[#D7E2EA] text-[#0C0C0C] hover:bg-white transition-colors"
-            >
-              Accept & Save History
-            </button>
-          </div>
-        </div>
-      )}
+      <AnimatePresence>
+        {!cookieConsent && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, x: '-50%' }}
+            animate={{ opacity: 1, y: 0, x: '-50%' }}
+            exit={{ opacity: 0, y: 30, scale: 0.95, x: '-50%' }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed bottom-6 left-1/2 w-[calc(100%-2rem)] max-w-3xl glass-panel-heavy rounded-3xl p-5 sm:p-6 z-50 flex flex-col sm:flex-row items-center justify-between gap-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+          >
+            <div className="text-sm font-light text-[#D7E2EA] text-center sm:text-left leading-relaxed">
+              We use a cookie to save your review history locally. No account needed.
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto shrink-0">
+              <button
+                onClick={() => setCookieConsent(true)}
+                className="w-full sm:w-auto px-6 py-2.5 rounded-full text-xs uppercase tracking-widest font-medium glass-button text-[#D7E2EA]/80 hover:text-white"
+              >
+                Decline
+              </button>
+              <button
+                onClick={handleAcceptCookies}
+                className="w-full sm:w-auto px-6 py-2.5 rounded-full text-xs uppercase tracking-widest font-medium bg-white text-[#0C0C0C] hover:bg-[#D7E2EA] transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:shadow-[0_0_25px_rgba(255,255,255,0.5)]"
+              >
+                Accept & Save
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 };

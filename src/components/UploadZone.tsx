@@ -79,13 +79,13 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
   return (
     <div className="w-full max-w-3xl mx-auto">
       {/* Mode tabs */}
-      <div className="flex gap-2 mb-6 p-1 rounded-full border border-[#D7E2EA]/15 bg-[#141418] w-fit mx-auto">
+      <div className="flex gap-2 mb-6 p-1 rounded-full glass-panel w-fit mx-auto">
         <button
           type="button"
           onClick={() => setMode('upload')}
-          className={`px-5 py-2 rounded-full text-sm uppercase tracking-widest font-medium transition-colors ${
+          className={`px-5 py-2.5 rounded-full text-sm uppercase tracking-widest font-medium transition-all duration-300 ${
             mode === 'upload'
-              ? 'bg-[#D7E2EA] text-[#0C0C0C]'
+              ? 'bg-white text-[#0C0C0C] shadow-[0_0_15px_rgba(255,255,255,0.3)]'
               : 'text-[#D7E2EA]/60 hover:text-[#D7E2EA]'
           }`}
         >
@@ -94,9 +94,9 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
         <button
           type="button"
           onClick={() => setMode('paste')}
-          className={`px-5 py-2 rounded-full text-sm uppercase tracking-widest font-medium transition-colors ${
+          className={`px-5 py-2.5 rounded-full text-sm uppercase tracking-widest font-medium transition-all duration-300 ${
             mode === 'paste'
-              ? 'bg-[#D7E2EA] text-[#0C0C0C]'
+              ? 'bg-white text-[#0C0C0C] shadow-[0_0_15px_rgba(255,255,255,0.3)]'
               : 'text-[#D7E2EA]/60 hover:text-[#D7E2EA]'
           }`}
         >
@@ -115,10 +115,10 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
           }}
           onDragLeave={() => setIsDragging(false)}
           onDrop={handleDrop}
-          className={`w-full rounded-[32px] border-2 border-dashed p-10 sm:p-14 transition-all ${
+          className={`w-full rounded-[32px] p-10 sm:p-14 transition-all duration-300 ${
             isDragging
-              ? 'border-[#B600A8] bg-[#1a0f1f]'
-              : 'border-[#D7E2EA]/25 bg-[#141418] hover:border-[#D7E2EA]/50 hover:bg-[#17171c]'
+              ? 'glass-panel-heavy border-white/40 shadow-[0_0_30px_rgba(255,255,255,0.2)]'
+              : 'glass-panel hover:glass-panel-heavy'
           }`}
         >
           <input
@@ -166,7 +166,7 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
           </div>
         </button>
       ) : (
-        <div className="w-full rounded-[32px] border border-[#D7E2EA]/15 bg-[#141418] overflow-hidden">
+        <div className="w-full rounded-[32px] glass-input overflow-hidden">
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
@@ -174,7 +174,7 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
             className="w-full h-64 p-5 sm:p-6 bg-transparent text-[#D7E2EA] font-light placeholder:text-[#D7E2EA]/30 resize-none focus:outline-none text-sm sm:text-base leading-relaxed"
             style={{ fontFamily: "'Kanit', sans-serif" }}
           />
-          <div className="flex items-center justify-between px-5 sm:px-6 py-3 border-t border-[#D7E2EA]/10 text-xs text-[#D7E2EA]/50 uppercase tracking-widest">
+          <div className="flex items-center justify-between px-5 sm:px-6 py-3 border-t border-[#D7E2EA]/10 text-xs text-[#D7E2EA]/50 uppercase tracking-widest bg-black/20">
             <span>{charCount.toLocaleString()} / {MAX_CHARS.toLocaleString()} chars</span>
             <span>{charCount < MIN_CHARS ? `${MIN_CHARS - charCount} more needed` : 'Ready'}</span>
           </div>
@@ -182,7 +182,7 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
       )}
 
       {/* Job Description (Optional) */}
-      <div className="mt-4 w-full rounded-[32px] border border-[#D7E2EA]/15 bg-[#141418] overflow-hidden">
+      <div className="mt-4 w-full rounded-[32px] glass-input overflow-hidden">
         <textarea
           value={jobDescription}
           onChange={(e) => setJobDescription(e.target.value)}
@@ -194,7 +194,7 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
 
       {/* Error banner */}
       {error && (
-        <div className="mt-4 flex items-start gap-3 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200">
+        <div className="mt-4 flex items-start gap-3 rounded-2xl border border-red-500/40 bg-red-500/20 backdrop-blur-md p-4 text-sm text-red-100 shadow-[0_0_20px_rgba(239,68,68,0.2)]">
           <AlertCircle size={20} className="shrink-0 mt-0.5" strokeWidth={1.6} />
           <span>{error}</span>
         </div>

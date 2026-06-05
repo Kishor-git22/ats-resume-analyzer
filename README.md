@@ -12,10 +12,10 @@ The platform is designed as a modern, decoupled Single Page Application (SPA) ba
 
 ```mermaid
 graph TD
-    Client[Client Browser (React/Vite)]
-    Vercel[Vercel Serverless API]
-    MongoDB[(MongoDB Atlas)]
-    Gemini[Google Gemini AI]
+    Client["Client Browser (React/Vite)"]
+    Vercel["Vercel Serverless API"]
+    MongoDB[("MongoDB Atlas")]
+    Gemini["Google Gemini AI"]
 
     Client -- "1. Extract PDF Text (Local)" --> Client
     Client -- "2. POST /api/review" --> Vercel

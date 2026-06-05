@@ -4,7 +4,16 @@ A premium, serverless web application that provides instant, brutally honest AI-
 
 **[Live Preview / Try it out 🚀](https://kisbor-ats-resume-analyzer.vercel.app/)**
 
-![ATS Resume Analyzer Interface](/public/preview.png) _(Preview Placeholder)_
+### 📸 Application Previews
+
+<p align="center">
+  <img src="/public/screenshots/preview-1.png" width="48%" />
+  <img src="/public/screenshots/preview-3.png" width="48%" />
+</p>
+<p align="center">
+  <img src="/public/screenshots/preview-2.png" width="48%" />
+  <img src="/public/screenshots/preview-4.png" width="48%" />
+</p>
 
 ## 🧠 Architecture & Tech Stack
 

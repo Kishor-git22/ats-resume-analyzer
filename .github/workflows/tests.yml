@@ -48,10 +48,12 @@ jobs:
       - name: Run E2E Playwright Tests
         run: npm run test:e2e
 
-      - name: Upload Playwright Report
+      - name: Upload Playwright Report & Coverage
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
-          path: playwright-report/
+          name: playwright-report-and-coverage
+          path: |
+            playwright-report/
+            coverage-e2e/
           retention-days: 30

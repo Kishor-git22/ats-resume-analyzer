@@ -76,7 +76,7 @@ const HistoryList = ({ onSelect, userId, refreshTrigger }: HistoryListProps) => 
   }
 
   return (
-    <div className="w-full max-w-3xl mx-auto mt-6 space-y-4">
+    <div className="w-full max-w-3xl mx-auto mt-6 space-y-2.5 h-full overflow-y-auto no-scrollbar pb-8 px-1">
       {history.map((item) => {
         const date = new Date(item.createdAt).toLocaleDateString('en-US', {
           month: 'short',
@@ -88,36 +88,53 @@ const HistoryList = ({ onSelect, userId, refreshTrigger }: HistoryListProps) => 
           <button
             key={item._id}
             onClick={() => onSelect(item)}
-            className="w-full text-left p-5 sm:p-6 rounded-[24px] glass-panel hover:glass-panel-heavy hover:scale-[1.01] active:scale-100 transition-all duration-300 group flex items-center justify-between"
+            className="w-full text-left p-4 sm:p-5 rounded-[32px] glass-panel hover:glass-panel-heavy transition-all duration-300 group flex items-center justify-between"
           >
-            <div className="flex flex-col gap-2">
-              <div className="flex items-center gap-3">
-                <span className="text-[#D7E2EA] font-medium text-lg">
-                  Score: {item.result.overallScore}
+            <div className="flex items-center gap-5 overflow-hidden">
+              {/* Score Badge */}
+              <div className="flex-shrink-0 flex flex-col items-center justify-center w-16 h-16 rounded-[18px] bg-black/20 group-hover:bg-black/30 transition-colors shadow-inner">
+                <span className="text-2xl font-black score-gradient leading-none">
+                  {item.result.overallScore}
                 </span>
-                <span className="text-[#D7E2EA]/40 text-xs uppercase tracking-widest">{date}</span>
+                <span className="text-[9px] uppercase tracking-widest text-[#D7E2EA]/40 mt-1 font-medium">
+                  Score
+                </span>
               </div>
 
-              <div className="flex items-center gap-4 text-sm text-[#D7E2EA]/70">
-                <div className="flex items-center gap-1.5">
-                  <FileText size={14} className="text-[#D7E2EA]/50" />
-                  <span className="truncate max-w-[150px] sm:max-w-[200px]">
-                    {item.resumeText.slice(0, 30)}...
+              {/* Content */}
+              <div className="flex flex-col gap-1.5 overflow-hidden">
+                <div className="flex items-center gap-3">
+                  <span className="text-[#D7E2EA] font-medium text-base sm:text-lg truncate">
+                    {item.jobDescription ? 'Tailored Review' : 'General Review'}
+                  </span>
+                  <span className="text-[#D7E2EA]/40 text-[10px] sm:text-[11px] uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-black/20 whitespace-nowrap">
+                    {date}
                   </span>
                 </div>
-                {item.jobDescription && (
-                  <div className="flex items-center gap-1.5 hidden sm:flex">
-                    <Briefcase size={14} className="text-[#D7E2EA]/50" />
-                    <span className="truncate max-w-[200px]">Tailored for Job</span>
+
+                <div className="flex items-center gap-4 text-xs sm:text-sm text-[#D7E2EA]/60">
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <FileText size={14} className="text-[#D7E2EA]/30 shrink-0" />
+                    <span className="truncate max-w-[150px] sm:max-w-[250px]">
+                      {item.resumeText.replace(/\n/g, ' ').slice(0, 45).trim()}...
+                    </span>
                   </div>
-                )}
+                  {item.jobDescription && (
+                    <div className="hidden sm:flex items-center gap-1.5 shrink-0 pl-3 border-l border-white/10">
+                      <Briefcase size={14} className="text-[#D7E2EA]/30" />
+                      <span>Targeted</span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
-            <ChevronRight
-              size={24}
-              className="text-[#D7E2EA]/20 group-hover:text-[#D7E2EA]/60 transition-colors"
-            />
+            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-transparent group-hover:bg-white/5 transition-colors shrink-0 ml-2 sm:ml-4">
+              <ChevronRight
+                size={20}
+                className="text-[#D7E2EA]/30 group-hover:text-[#D7E2EA]/80 group-hover:translate-x-0.5 transition-all"
+              />
+            </div>
           </button>
         );
       })}

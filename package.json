@@ -7,7 +7,8 @@
     "node": ">=22.0.0"
   },
   "scripts": {
-    "dev": "vite",
+    "dev:ui": "vite",
+    "dev": "node scripts/start-dev.js",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "prepare": "husky",
@@ -68,6 +69,7 @@
     "ts-jest": "^29.4.11",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.60.1",
+    "vercel": "^54.9.1",
     "vite": "^5.4.8"
   },
   "lint-staged": {

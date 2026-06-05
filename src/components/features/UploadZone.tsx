@@ -83,7 +83,7 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
   const canSubmit = charCount >= MIN_CHARS && !overLimit && !isProcessing && !isExtracting;
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
+    <div className="w-full max-w-3xl mx-auto flex flex-col h-full overflow-y-auto no-scrollbar pb-8 px-1">
       {/* Mode tabs */}
       <div className="grid grid-cols-2 gap-2 mb-6 p-1 rounded-full glass-panel max-w-[320px] w-full mx-auto">
         <button
@@ -177,7 +177,7 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Paste your full resume text here…"
-            className="w-full h-64 p-5 sm:p-6 bg-transparent text-[#D7E2EA] font-light placeholder:text-[#D7E2EA]/30 resize-none focus:outline-none text-sm sm:text-base leading-relaxed"
+            className="w-full h-64 p-5 sm:p-6 bg-transparent text-[#D7E2EA] font-light placeholder:text-[#D7E2EA]/30 resize-none focus:outline-none text-sm sm:text-base leading-relaxed no-scrollbar"
             style={{ fontFamily: "'Kanit', sans-serif" }}
           />
           <div className="flex items-center justify-between px-5 sm:px-6 py-3 border-t border-[#D7E2EA]/10 text-xs text-[#D7E2EA]/50 uppercase tracking-widest bg-black/20">
@@ -195,7 +195,7 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
           value={jobDescription}
           onChange={(e) => setJobDescription(e.target.value)}
           placeholder="Paste the Job Description here (Optional) — helps the AI tailor the review…"
-          className="w-full h-32 p-5 sm:p-6 bg-transparent text-[#D7E2EA] font-light placeholder:text-[#D7E2EA]/30 resize-none focus:outline-none text-sm sm:text-base leading-relaxed"
+          className="w-full h-32 p-5 sm:p-6 bg-transparent text-[#D7E2EA] font-light placeholder:text-[#D7E2EA]/30 resize-none focus:outline-none text-sm sm:text-base leading-relaxed no-scrollbar"
           style={{ fontFamily: "'Kanit', sans-serif" }}
         />
       </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { AlertCircle } from 'lucide-react';
 import Cookies from 'js-cookie';
@@ -34,13 +34,23 @@ export default function App() {
     setCookieConsent(true);
   };
 
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (!window.location.hash) {
+        reset();
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, [reset]);
+
   return (
-    <main className="relative min-h-screen w-full bg-transparent flex flex-col">
+    <main className="relative h-screen overflow-hidden w-full bg-transparent flex flex-col">
       <Header />
 
-      <div className="flex-1 flex flex-col justify-center px-5 sm:px-8 md:px-10 py-6 md:py-8">
+      <div className="flex-1 flex flex-col justify-center px-5 sm:px-8 md:px-10 py-6 md:py-8 overflow-hidden">
         {state.phase === 'idle' && (
-          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-10 items-center lg:items-start my-auto">
+          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-10 items-center lg:items-start my-auto h-full">
             <div className="flex flex-col gap-8 lg:gap-12 pt-0 lg:pt-4">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -58,8 +68,8 @@ export default function App() {
                   className="font-light text-[#D7E2EA]/70 leading-relaxed max-w-xl mx-auto lg:mx-0"
                   style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.1rem)' }}
                 >
-                  Drop in your resume. Get a brutally honest, AI-powered review with scores,
-                  strengths, weaknesses, and rewritten bullets — in seconds.
+                  Drop in your resume. Get a brutally honest, AI powered review with scores,
+                  strengths, weaknesses, and rewritten bullets in seconds.
                 </p>
               </motion.div>
 
@@ -69,7 +79,7 @@ export default function App() {
               />
             </div>
 
-            <div className="flex flex-col gap-6 w-full max-w-3xl mx-auto lg:mx-0 lg:max-w-none min-h-[500px] lg:min-h-[650px]">
+            <div className="flex flex-col gap-6 w-full max-w-3xl mx-auto lg:mx-0 lg:max-w-none h-full max-h-[80vh] overflow-hidden">
               <div className="grid grid-cols-2 gap-3 max-w-[400px] w-full mx-auto">
                 <button
                   onClick={() => setActiveTab('upload')}
@@ -97,12 +107,16 @@ export default function App() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="w-full relative"
+                className="w-full relative flex-1 min-h-0 flex flex-col"
               >
-                <div className={activeTab === 'upload' ? 'block' : 'hidden'}>
+                <div
+                  className={`w-full flex-1 min-h-0 ${activeTab === 'upload' ? 'flex flex-col' : 'hidden'}`}
+                >
                   <UploadZone onSubmit={handleReview} isProcessing={false} />
                 </div>
-                <div className={activeTab === 'history' ? 'block' : 'hidden'}>
+                <div
+                  className={`w-full flex-1 min-h-0 ${activeTab === 'history' ? 'flex flex-col' : 'hidden'}`}
+                >
                   <HistoryList
                     onSelect={(item) => showHistoryItem(item.resumeText, item.result)}
                     userId={cookieConsent ? Cookies.get('userId') || null : null}

@@ -16,26 +16,30 @@ export function useReview(onSuccess?: () => void) {
 
   const handleReview = async (resumeText: string, jobDescription?: string) => {
     setState({ phase: 'loading', resumeText });
+    window.location.hash = 'loading';
 
     try {
       const data = await analyzeResume(resumeText, jobDescription);
 
       setState({ phase: 'result', resumeText, result: data });
+      window.location.replace(window.location.pathname + window.location.search + '#result');
       onSuccess?.();
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Something went wrong.';
       setState({ phase: 'error', resumeText, error: msg });
+      window.location.replace(window.location.pathname + window.location.search + '#error');
     }
   };
 
   const showHistoryItem = (resumeText: string, result: ReviewResult) => {
+    window.location.hash = 'result';
     setState({ phase: 'result', resumeText, result });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const reset = () => {
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
     setState({ phase: 'idle' });
   };
 

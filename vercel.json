@@ -1,0 +1,4 @@
+{
+  "devCommand": "npm run dev:ui",
+  "framework": "vite"
+}

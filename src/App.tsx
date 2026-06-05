@@ -64,7 +64,7 @@ export default function App() {
                   className="hero-heading font-black uppercase leading-none tracking-tight"
                   style={{ fontSize: 'clamp(2.5rem, 5.5vw, 5rem)' }}
                 >
-                  Resume reviewer
+                  Resume Analyzer
                 </h1>
                 <p
                   className="font-light text-[#D7E2EA]/70 leading-relaxed max-w-xl mx-auto lg:mx-0"

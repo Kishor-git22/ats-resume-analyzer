@@ -48,7 +48,9 @@ export default function App() {
     <main className="relative h-screen overflow-hidden w-full bg-transparent flex flex-col">
       <Header />
 
-      <div className="flex-1 flex flex-col justify-center px-5 sm:px-8 md:px-10 py-6 md:py-8 overflow-hidden">
+      <div
+        className={`flex-1 flex flex-col ${state.phase === 'idle' ? 'justify-center' : ''} px-5 sm:px-8 md:px-10 py-6 md:py-8 overflow-hidden`}
+      >
         {state.phase === 'idle' && (
           <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-10 items-center lg:items-start my-auto h-full">
             <div className="flex flex-col gap-8 lg:gap-12 pt-0 lg:pt-4">

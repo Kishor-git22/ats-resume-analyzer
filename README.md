@@ -170,4 +170,10 @@ The UI is intentionally designed to feel like a premium, native application rath
 
 ---
 
+## 📜 License
+
+This project is open-source and licensed under the [MIT License](LICENSE). Feel free to fork, modify, and use it in your own projects!
+
+---
+
 _Architected and developed by Kishor Annamalai._

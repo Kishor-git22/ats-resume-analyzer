@@ -8,9 +8,9 @@ export default function Header() {
         className="flex items-center gap-2 text-[#D7E2EA] font-medium uppercase tracking-widest text-sm sm:text-base group"
       >
         <span className="score-gradient font-black text-xl sm:text-2xl group-hover:scale-110 transition-transform duration-300">
-          R
+          ATS
         </span>
-        ATS Resume Analyzer
+        Resume Analyzer
       </a>
       <div className="flex items-center gap-4 sm:gap-6">
         <div className="flex items-center gap-3 sm:gap-4 px-3 sm:px-4 py-1.5 rounded-full bg-white/5 border border-white/10 shadow-inner backdrop-blur-md">

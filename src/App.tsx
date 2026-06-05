@@ -45,14 +45,14 @@ export default function App() {
   }, [reset]);
 
   return (
-    <main className="relative h-screen overflow-hidden w-full bg-transparent flex flex-col">
+    <main className="relative min-h-screen lg:h-screen lg:overflow-hidden w-full bg-transparent flex flex-col">
       <Header />
 
       <div
-        className={`flex-1 flex flex-col ${state.phase === 'idle' ? 'justify-center' : ''} px-5 sm:px-8 md:px-10 py-6 md:py-8 overflow-hidden`}
+        className={`flex-1 flex flex-col ${state.phase === 'idle' ? 'lg:justify-center' : ''} px-5 sm:px-8 md:px-10 py-6 md:py-8 lg:overflow-hidden`}
       >
         {state.phase === 'idle' && (
-          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-10 items-center lg:items-start my-auto h-full">
+          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-10 items-center lg:items-start my-auto lg:h-full">
             <div className="flex flex-col gap-8 lg:gap-12 pt-0 lg:pt-4">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -81,7 +81,7 @@ export default function App() {
               />
             </div>
 
-            <div className="flex flex-col gap-6 w-full max-w-3xl mx-auto lg:mx-0 lg:max-w-none h-full max-h-[80vh] overflow-hidden">
+            <div className="flex flex-col gap-6 w-full max-w-3xl mx-auto lg:mx-0 lg:max-w-none lg:h-full lg:max-h-[80vh] lg:overflow-hidden">
               <div className="grid grid-cols-2 gap-3 max-w-[400px] w-full mx-auto">
                 <button
                   onClick={() => setActiveTab('upload')}

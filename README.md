@@ -2,6 +2,8 @@
 
 A premium, serverless web application that provides instant, brutally honest AI-powered resume reviews. Built with a stunning modern glassmorphism aesthetic, it analyzes resumes against ATS (Applicant Tracking System) standards and provides actionable feedback, including automated bullet rewrites.
 
+**[Live Preview / Try it out 🚀](https://kisbor-ats-resume-analyzer.vercel.app/)**
+
 ![ATS Resume Analyzer Interface](/public/preview.png) _(Preview Placeholder)_
 
 ## 🧠 Architecture & Tech Stack

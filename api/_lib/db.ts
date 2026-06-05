@@ -20,3 +20,11 @@ export async function getDb() {
 
   return client.db();
 }
+
+export async function resetDbCache() {
+  if (client) {
+    await client.close();
+  }
+  client = null;
+  clientPromise = null;
+}

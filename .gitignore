@@ -31,3 +31,7 @@ yarn-error.log*
 .env.local
 .env.*
 !.env.example
+
+playwright-report
+test-results
+.features-gen

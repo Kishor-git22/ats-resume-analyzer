@@ -13,6 +13,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Create package-lock.json at runtime
+        run: |
+          rm -f package-lock.json
+          echo "Generating package-lock.json at runtime..."
+          npm install --package-lock-only --ignore-scripts
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -20,7 +26,17 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: |
+          if [ ! -f package-lock.json ]; then
+            echo "package-lock.json not found. Generating at runtime..."
+            npm install --package-lock-only --ignore-scripts
+          fi
+          npm ci
+
+      - name: Verify lockfile and install
+        run: |
+          test -f package-lock.json
+          npm ls --depth=0
 
       - name: Run Build
         run: npm run build

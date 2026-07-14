@@ -85,14 +85,14 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
   return (
     <div className="w-full max-w-3xl mx-auto flex flex-col h-full overflow-y-auto no-scrollbar pb-8 px-1">
       {/* Mode tabs */}
-      <div className="grid grid-cols-2 gap-2 mb-6 p-1 rounded-full glass-panel max-w-[320px] w-full mx-auto">
+      <div className="grid grid-cols-2 gap-1.5 mb-6 p-1 rounded-xl glass-panel max-w-[320px] w-full mx-auto">
         <button
           type="button"
           onClick={() => setMode('upload')}
-          className={`w-full py-2.5 rounded-full text-sm uppercase tracking-widest font-medium transition-all duration-300 ${
+          className={`w-full min-h-[38px] py-1.5 rounded-lg text-xs uppercase tracking-widest font-medium transition-all duration-200 ${
             mode === 'upload'
-              ? 'bg-white text-[#0C0C0C] shadow-[0_0_15px_rgba(255,255,255,0.3)]'
-              : 'text-[#D7E2EA]/60 hover:text-[#D7E2EA]'
+              ? 'bg-[#1d1d1f] dark:bg-[#f5f5f7] text-white dark:text-[#1d1d1f] shadow-sm'
+              : 'text-[#1d1d1f]/60 dark:text-[#f5f5f7]/60 hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7]'
           }`}
         >
           Upload PDF
@@ -100,10 +100,10 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
         <button
           type="button"
           onClick={() => setMode('paste')}
-          className={`w-full py-2.5 rounded-full text-sm uppercase tracking-widest font-medium transition-all duration-300 ${
+          className={`w-full min-h-[38px] py-1.5 rounded-lg text-xs uppercase tracking-widest font-medium transition-all duration-200 ${
             mode === 'paste'
-              ? 'bg-white text-[#0C0C0C] shadow-[0_0_15px_rgba(255,255,255,0.3)]'
-              : 'text-[#D7E2EA]/60 hover:text-[#D7E2EA]'
+              ? 'bg-[#1d1d1f] dark:bg-[#f5f5f7] text-white dark:text-[#1d1d1f] shadow-sm'
+              : 'text-[#1d1d1f]/60 dark:text-[#f5f5f7]/60 hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7]'
           }`}
         >
           Paste text
@@ -121,9 +121,9 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
           }}
           onDragLeave={() => setIsDragging(false)}
           onDrop={handleDrop}
-          className={`w-full rounded-[32px] p-10 sm:p-14 transition-all duration-300 ${
+          className={`w-full rounded-2xl p-10 sm:p-14 transition-all duration-250 ${
             isDragging
-              ? 'glass-panel-heavy border-white/40 shadow-[0_0_30px_rgba(255,255,255,0.2)]'
+              ? 'glass-panel-heavy border-[#1d1d1f]/15 dark:border-[#f5f5f7]/25 shadow-md'
               : 'glass-panel hover:glass-panel-heavy'
           }`}
         >
@@ -140,17 +140,21 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
           <div className="flex flex-col items-center gap-4 text-center">
             {fileName ? (
               <>
-                <FileText size={48} className="text-[#D7E2EA]" strokeWidth={1.4} />
+                <FileText
+                  size={48}
+                  className="text-[#1d1d1f] dark:text-[#f5f5f7]"
+                  strokeWidth={1.4}
+                />
                 <div className="flex flex-col gap-1">
-                  <span className="text-base sm:text-lg font-medium text-[#D7E2EA] break-all">
+                  <span className="text-base sm:text-lg font-medium text-[#1d1d1f] dark:text-[#f5f5f7] break-all">
                     {fileName}
                   </span>
                   {isExtracting ? (
-                    <span className="text-sm text-[#D7E2EA]/60 animate-soft-pulse">
+                    <span className="text-sm text-[#1d1d1f]/60 dark:text-[#f5f5f7]/60 animate-soft-pulse">
                       Extracting text…
                     </span>
                   ) : (
-                    <span className="text-sm text-[#D7E2EA]/60">
+                    <span className="text-sm text-[#1d1d1f]/60 dark:text-[#f5f5f7]/60">
                       {charCount.toLocaleString()} characters extracted · click to replace
                     </span>
                   )}
@@ -158,12 +162,16 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
               </>
             ) : (
               <>
-                <UploadCloud size={48} className="text-[#D7E2EA]/70" strokeWidth={1.4} />
+                <UploadCloud
+                  size={48}
+                  className="text-[#1d1d1f]/70 dark:text-[#f5f5f7]/70"
+                  strokeWidth={1.4}
+                />
                 <div className="flex flex-col gap-1">
-                  <span className="text-base sm:text-lg font-medium text-[#D7E2EA]">
+                  <span className="text-base sm:text-lg font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">
                     Drop your resume PDF here, or click to browse
                   </span>
-                  <span className="text-sm text-[#D7E2EA]/50">
+                  <span className="text-sm text-[#1d1d1f]/50 dark:text-[#f5f5f7]/50">
                     PDF only · max 10 MB · text is never stored
                   </span>
                 </div>
@@ -172,15 +180,15 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
           </div>
         </button>
       ) : (
-        <div className="w-full rounded-[32px] glass-input overflow-hidden">
+        <div className="w-full rounded-2xl glass-input overflow-hidden">
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Paste your full resume text here…"
-            className="w-full h-64 p-5 sm:p-6 bg-transparent text-[#D7E2EA] font-light placeholder:text-[#D7E2EA]/30 resize-none focus:outline-none text-sm sm:text-base leading-relaxed no-scrollbar"
+            className="w-full h-64 p-5 sm:p-6 bg-transparent text-[#1d1d1f] dark:text-[#f5f5f7] font-light placeholder:text-[#1d1d1f]/45 dark:placeholder:text-[#f5f5f7]/30 resize-none focus:outline-none text-sm sm:text-base leading-relaxed no-scrollbar"
             style={{ fontFamily: "'Kanit', sans-serif" }}
           />
-          <div className="flex items-center justify-between px-5 sm:px-6 py-3 border-t border-[#D7E2EA]/10 text-xs text-[#D7E2EA]/50 uppercase tracking-widest bg-black/20">
+          <div className="flex items-center justify-between px-5 sm:px-6 py-3 border-t border-[#1d1d1f]/10 dark:border-[#f5f5f7]/10 text-xs text-[#1d1d1f]/60 dark:text-[#f5f5f7]/50 uppercase tracking-widest bg-black/5 dark:bg-black/20">
             <span>
               {charCount.toLocaleString()} / {MAX_CHARS.toLocaleString()} chars
             </span>
@@ -190,19 +198,19 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
       )}
 
       {/* Job Description (Optional) */}
-      <div className="mt-4 w-full rounded-[32px] glass-input overflow-hidden">
+      <div className="mt-4 w-full rounded-2xl glass-input overflow-hidden">
         <textarea
           value={jobDescription}
           onChange={(e) => setJobDescription(e.target.value)}
           placeholder="Paste the Job Description here (Optional) — helps the AI tailor the review…"
-          className="w-full h-32 p-5 sm:p-6 bg-transparent text-[#D7E2EA] font-light placeholder:text-[#D7E2EA]/30 resize-none focus:outline-none text-sm sm:text-base leading-relaxed no-scrollbar"
+          className="w-full h-32 p-5 sm:p-6 bg-transparent text-[#1d1d1f] dark:text-[#f5f5f7] font-light placeholder:text-[#1d1d1f]/45 dark:placeholder:text-[#f5f5f7]/30 resize-none focus:outline-none text-sm sm:text-base leading-relaxed no-scrollbar"
           style={{ fontFamily: "'Kanit', sans-serif" }}
         />
       </div>
 
       {/* Error banner */}
       {error && (
-        <div className="mt-4 flex items-start gap-3 rounded-2xl border border-red-500/40 bg-red-500/20 backdrop-blur-md p-4 text-sm text-red-100 shadow-[0_0_20px_rgba(239,68,68,0.2)]">
+        <div className="mt-4 flex items-start gap-3 rounded-xl border border-red-500/30 bg-red-500/10 backdrop-blur-md p-4 text-sm text-red-800 dark:text-red-200">
           <AlertCircle size={20} className="shrink-0 mt-0.5" strokeWidth={1.6} />
           <span>{error}</span>
         </div>
@@ -214,13 +222,14 @@ const UploadZone = ({ onSubmit, isProcessing }: UploadZoneProps) => {
           type="button"
           onClick={handleSubmit}
           disabled={!canSubmit}
-          className="inline-flex items-center gap-3 rounded-full px-10 py-4 text-sm sm:text-base font-medium uppercase tracking-widest text-white transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
+          className="inline-flex items-center gap-3 rounded-xl px-10 py-3.5 text-sm sm:text-base font-medium uppercase tracking-widest text-white transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100 min-h-[44px]"
           style={{
             background:
               'linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)',
-            boxShadow: '0px 4px 4px rgba(181, 1, 167, 0.25), 4px 4px 12px #7721B1 inset',
-            outline: '2px solid #FFFFFF',
-            outlineOffset: '-3px',
+            boxShadow:
+              '0px 2px 4px rgba(181, 1, 167, 0.15), inset 0 1px 0.5px rgba(255, 255, 255, 0.3)',
+            outline: '1.5px solid rgba(255, 255, 255, 0.65)',
+            outlineOffset: '-2.5px',
           }}
         >
           <Sparkles size={18} strokeWidth={1.8} />

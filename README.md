@@ -8,11 +8,11 @@ A premium, serverless web application that provides instant, brutally honest AI-
 
 <p align="center">
   <img src="public/screenshots/preview-1.png" width="48%" />
-  <img src="public/screenshots/preview-3.png" width="48%" />
+  <img src="public/screenshots/preview-4.png" width="48%" />
 </p>
 <p align="center">
   <img src="public/screenshots/preview-2.png" width="48%" />
-  <img src="public/screenshots/preview-4.png" width="48%" />
+  <img src="public/screenshots/preview-3.png" width="48%" />
 </p>
 
 ### 🆕 What's New in v2.1

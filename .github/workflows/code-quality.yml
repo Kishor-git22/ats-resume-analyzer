@@ -50,4 +50,3 @@ jobs:
 
       - name: Run Vulnerability Test (Audit)
         run: npm audit
-

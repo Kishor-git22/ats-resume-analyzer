@@ -15,10 +15,9 @@ jobs:
 
       - name: Create package-lock.json at runtime
         run: |
-          if [ ! -f package-lock.json ]; then
-            echo "package-lock.json not found. Generating at runtime..."
-            npm install --package-lock-only
-          fi
+          rm -f package-lock.json
+          echo "Generating package-lock.json at runtime..."
+          npm install --package-lock-only
 
       - name: Setup Node.js
         uses: actions/setup-node@v4

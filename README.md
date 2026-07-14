@@ -1,4 +1,4 @@
-# ATS Resume Analyzer (Powered by Gemini)
+# ATS Resume Analyzer
 
 A premium, serverless web application that provides instant, brutally honest AI-powered resume reviews. Built with a stunning modern glassmorphism aesthetic, it analyzes resumes against ATS (Applicant Tracking System) standards and provides actionable feedback, including automated bullet rewrites.
 

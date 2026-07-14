@@ -7,13 +7,20 @@ A premium, serverless web application that provides instant, brutally honest AI-
 ### 📸 Application Previews
 
 <p align="center">
-  <img src="/public/screenshots/preview-1.png" width="48%" />
-  <img src="/public/screenshots/preview-3.png" width="48%" />
+  <img src="public/screenshots/preview-1.png" width="48%" />
+  <img src="public/screenshots/preview-3.png" width="48%" />
 </p>
 <p align="center">
-  <img src="/public/screenshots/preview-2.png" width="48%" />
-  <img src="/public/screenshots/preview-4.png" width="48%" />
+  <img src="public/screenshots/preview-2.png" width="48%" />
+  <img src="public/screenshots/preview-4.png" width="48%" />
 </p>
+
+### 🆕 What's New in v2.1
+
+- **macOS Sequoia Glassmorphism:** Redesigned UI featuring 0.5px borders, top-edge specularity highlights, and flat high-saturation frosted materials.
+- **Circular Theme Reveal Wave:** Dynamic circular clip-path swipe animation centered on the toggle button coordinates during theme changes.
+- **Telemetry CountUp Interactions:** Stats counters count up dynamically from `0` to actual values on page load.
+- **Security Overhaul:** Zero vulnerabilities remaining after auditing and patching nested dependency paths.
 
 ## 🧠 Architecture & Tech Stack
 
